@@ -54,7 +54,7 @@
        <string>Aceptar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btnSalir">
       <property name="text">
        <string>Salir</string>
       </property>

@@ -1,13 +1,16 @@
 import sys
 
+import events
 from window import *
-
+import sys, var
 
 class Main(QtWidgets.QMainWindow):
     def __init__(self):
         super(Main, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        var.ui = Ui_MainWindow()
+        var.ui.setupUi(self)
+
+        var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
