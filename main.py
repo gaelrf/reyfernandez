@@ -12,6 +12,8 @@ class Main(QtWidgets.QMainWindow):
 
         var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
 
+        var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
