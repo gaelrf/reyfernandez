@@ -1,4 +1,4 @@
-
+import clientes
 from window import *
 from aviso import *
 import sys, var, events
@@ -16,8 +16,15 @@ class Main(QtWidgets.QMainWindow):
         var.ui.setupUi(self)
 
         var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
+        var.ui.rbtGroupSex.buttonClicked.connect(clientes.Clientes.selSexo)
+        var.ui.chkGroupPago.buttonClicked.connect(clientes.Clientes.selPago)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
+
+        var.ui.txtDni.editingFinished.connect(clientes.Clientes.validarDNI)
+
+        clientes.Clientes.cargaProv(self)
+        var.ui.cmbProv.activated[str].connect(clientes.Clientes.selProv)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
