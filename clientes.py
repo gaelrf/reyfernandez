@@ -82,3 +82,18 @@ class Clientes():
             return prov
         except Exception as error:
             print('Error en modulo selecionar provincia', error)
+    def cargarFecha(qDate):
+        try:
+            data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.month(),qDate.year()))
+            var.ui.txtFechaAltaCli.setText(str(data))
+            var.dlgcalendar.hide()
+        except Exception as error:
+            print('Error cargar fecha en txtFecha', error)
+    def priMay():
+        try:
+            nome=var.ui.txtNome.text()
+            var.ui.txtNome.setText(nome.title())
+            nome=var.ui.txtApel.text()
+            var.ui.txtApel.setText(nome.title())
+        except Exception as error:
+            print('Error en modulo primera Mayuscula', error)
