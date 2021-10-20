@@ -16,7 +16,7 @@ class Clientes():
             reemp_dig_ext = { 'X':'0', 'Y':'1', 'Z':'2'}
             numeros = '1234567890'
             dni = dni.upper()   #Convertir Letra a Mayusculas
-
+            var.ui.txtDni.setText(dni)
             if len(dni) == 9:
 
                 dig_control = dni[8]
@@ -30,19 +30,22 @@ class Clientes():
 
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: green}')
                     var.ui.lblValidoDni.setText('V')
-
+                    var.ui.txtDni.setStyleSheet('background-color: rgb(255, 255, 255)')
+                    correcto=True
                 else:
 
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                     var.ui.lblValidoDni.setText('X')
                     var.ui.txtDni.setStyleSheet('background-color: rgb(255, 0, 0)')
+                    correcto = False
 
             else:
 
                 var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                 var.ui.lblValidoDni.setText('X')
                 var.ui.txtDni.setStyleSheet('background-color: rgb(255, 150, 150)')
-
+                correcto = False
+            return correcto
 
         except Exception as error:
 
@@ -97,3 +100,42 @@ class Clientes():
             var.ui.txtApel.setText(nome.title())
         except Exception as error:
             print('Error en modulo primera Mayuscula', error)
+    def guardaCli(self):
+        try:
+            check=Clientes.validarDNI()
+            if check :
+                newcli = []
+                tablecli=[]
+                client =[var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
+                for i in client:
+                    tablecli.append(i.text())
+                pagos = []
+                if var.ui.chkCargoCuenta.isChecked():
+                    pagos.append('Cargo Cuenta')
+                if var.ui.chkTarjeta.isChecked():
+                    pagos.append('Tarjeta')
+                if var.ui.chkEfectivo.isChecked():
+                    pagos.append('Evectivo')
+                if var.ui.chkTransferencia.isChecked():
+                    pagos.append('Transferencia')
+                #pagos= set(pagos)
+                tablecli.append('; '.join(pagos))
+                row = 0
+                colum=0
+                var.ui.tableCliente.insertRow(row)
+                for campo in tablecli:
+                    cell =QtWidgets.QTableWidgetItem(str(campo))
+                    var.ui.tableCliente.setItem(row, colum,cell)
+                    colum += 1
+            else:
+                print('DNI no válido')
+        except Exception as error:
+            print('Error en modulo guardar cliente', error)
+    def limpiaFrormCli(self):
+        try:
+            cajas = [var.ui.txtDni,var.ui.txtNome,var.ui.txtApel,var.ui.txtFechaAltaCli,var.ui.txtDir]
+            for i in cajas:
+                i.setText('')
+
+        except Exception as error:
+            print('Error en modulo limpiar formulario', error)

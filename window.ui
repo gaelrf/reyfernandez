@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>815</width>
-    <height>588</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
      <string>XESTIÓN CLIENTES</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnAceptar">
+   <widget class="QPushButton" name="btnGrabaCli">
     <property name="geometry">
      <rect>
       <x>313</x>
@@ -42,7 +42,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Aceptar</string>
+     <string>Guardar</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnSalir">
@@ -62,7 +62,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>82</y>
+      <y>80</y>
       <width>261</width>
       <height>22</height>
      </rect>
@@ -487,15 +487,20 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="tableCliente">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>330</y>
+      <x>30</x>
+      <y>340</y>
       <width>741</width>
       <height>192</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string>DNI</string>
+     </property>
+    </column>
     <column>
      <property name="text">
       <string>Apellidos</string>
@@ -516,6 +521,19 @@
       <string>Formas de Pago</string>
      </property>
     </column>
+   </widget>
+   <widget class="QPushButton" name="btnLimpiaForm">
+    <property name="geometry">
+     <rect>
+      <x>654</x>
+      <y>290</y>
+      <width>31</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -563,11 +581,11 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="rbtGroupSex"/>
   <buttongroup name="chkGroupPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="rbtGroupSex"/>
  </buttongroups>
 </ui>

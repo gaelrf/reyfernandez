@@ -1,3 +1,4 @@
+
 import clientes
 from window import *
 from aviso import *
@@ -30,6 +31,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.rbtGroupSex.buttonClicked.connect(clientes.Clientes.selSexo)
         var.ui.chkGroupPago.buttonClicked.connect(clientes.Clientes.selPago)
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
+        var.ui.btnGrabaCli.clicked.connect(clientes.Clientes.guardaCli)
+        var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
 
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
@@ -40,6 +43,13 @@ class Main(QtWidgets.QMainWindow):
 
         clientes.Clientes.cargaProv(self)
         var.ui.cmbProv.activated[str].connect(clientes.Clientes.selProv)
+
+        events.Eventos.resizeTableCli(self)
+        # header = var.ui.tableCliente.horizontalHeader()
+        # for i in range(4):
+        #     header.setSectionResizeMode(i,QtWidgets.QHeaderView.Stretch)
+        #     if i == 2:
+        #         header.setSectionResizeMode(1,QtWidgets.QHeaderView.ResizeToContents)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
