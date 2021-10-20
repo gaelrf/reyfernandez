@@ -9,7 +9,8 @@ class Clientes():
     def validarDNI():
 
         try:
-
+            global dnivalido
+            dnivalido = False
             dni = var.ui.txtDni.text()
             tabla = 'TRWAGMYFPDXBNJZSQVHLCKE'   #
             dig_ext = 'XYZ'                     #
@@ -31,21 +32,20 @@ class Clientes():
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: green}')
                     var.ui.lblValidoDni.setText('V')
                     var.ui.txtDni.setStyleSheet('background-color: rgb(255, 255, 255)')
-                    correcto=True
+                    dnivalido=True
                 else:
 
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                     var.ui.lblValidoDni.setText('X')
                     var.ui.txtDni.setStyleSheet('background-color: rgb(255, 0, 0)')
-                    correcto = False
+                    dnivalido = False
 
             else:
 
                 var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                 var.ui.lblValidoDni.setText('X')
                 var.ui.txtDni.setStyleSheet('background-color: rgb(255, 150, 150)')
-                correcto = False
-            return correcto
+                dnivalido = False
 
         except Exception as error:
 
@@ -102,8 +102,7 @@ class Clientes():
             print('Error en modulo primera Mayuscula', error)
     def guardaCli(self):
         try:
-            check=Clientes.validarDNI()
-            if check :
+            if dnivalido :
                 newcli = []
                 tablecli=[]
                 client =[var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
@@ -128,7 +127,11 @@ class Clientes():
                     var.ui.tableCliente.setItem(row, colum,cell)
                     colum += 1
             else:
-                print('DNI no válido')
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setText('DNI ni Válido')
+                msg.exec()
         except Exception as error:
             print('Error en modulo guardar cliente', error)
     def limpiaFrormCli(self):
