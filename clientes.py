@@ -1,6 +1,7 @@
 '''
 
 '''
+import conexion
 from window import *
 import var
 
@@ -104,10 +105,19 @@ class Clientes():
         try:
             if dnivalido :
                 newcli = []
-                tablecli=[]
-                client =[var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
+                cliente = [var.ui.txtDni,var.ui.txtFechaAltaCli,var.ui.txtApel,var.ui.txtNome,var.ui.txtDir]
+                tablecli = []
+                client = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
+                for i in cliente:
+                    newcli.append(i.text())
                 for i in client:
                     tablecli.append(i.text())
+                newcli.append(var.ui.cmbProv.currentText)
+                newcli.append(var.ui.cmbMun.currentText)
+                if var.ui.rbtHom.isChecked():
+                    newcli.append('Hombre')
+                elif var.ui.rbtFem.isChecked():
+                    newcli.append('Mujer')
                 pagos = []
                 if var.ui.chkCargoCuenta.isChecked():
                     pagos.append('Cargo Cuenta')
@@ -118,7 +128,9 @@ class Clientes():
                 if var.ui.chkTransferencia.isChecked():
                     pagos.append('Transferencia')
                 #pagos= set(pagos)
+                newcli.append('; '.join(pagos))
                 tablecli.append('; '.join(pagos))
+                print(newcli)
                 row = 0
                 colum=0
                 var.ui.tableCliente.insertRow(row)
@@ -126,6 +138,7 @@ class Clientes():
                     cell =QtWidgets.QTableWidgetItem(str(campo))
                     var.ui.tableCliente.setItem(row, colum,cell)
                     colum += 1
+                conexion.Conexion.altaCli(newcli)
             else:
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
@@ -142,3 +155,16 @@ class Clientes():
 
         except Exception as error:
             print('Error en modulo limpiar formulario', error)
+
+    def cargaCli(self):
+        try:
+
+            fila = var.ui.tableCliente.selectedItems()
+            datos = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
+            if fila:
+                row = [dato.text () for dato in fila]
+                for i, dato in enumerate(datos):
+                    dato.setText(row[i])
+
+        except Exception as error:
+            print('Error en cargar datos de cliente', error)

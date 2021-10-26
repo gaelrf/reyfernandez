@@ -1,5 +1,6 @@
 
 import clientes
+import conexion
 from window import *
 from aviso import *
 from windowcal import *
@@ -45,11 +46,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.cmbProv.activated[str].connect(clientes.Clientes.selProv)
 
         events.Eventos.resizeTableCli(self)
-        # header = var.ui.tableCliente.horizontalHeader()
-        # for i in range(4):
-        #     header.setSectionResizeMode(i,QtWidgets.QHeaderView.Stretch)
-        #     if i == 2:
-        #         header.setSectionResizeMode(1,QtWidgets.QHeaderView.ResizeToContents)
+        var.ui.tableCliente.clicked.connect(clientes.Clientes.cargaCli)
+        var.ui.tableCliente.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+
+        conexion.Conexion.db_connect(var.filedb)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
