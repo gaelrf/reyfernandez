@@ -29,8 +29,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.setupUi(self)
 
         var.ui.btnSalir.clicked.connect(events.Eventos.salir)
-        var.ui.rbtGroupSex.buttonClicked.connect(clientes.Clientes.selSexo)
-        var.ui.chkGroupPago.buttonClicked.connect(clientes.Clientes.selPago)
+        # var.ui.rbtGroupSex.buttonClicked.connect(clientes.Clientes.selSexo)
+        # var.ui.chkGroupPago.buttonClicked.connect(clientes.Clientes.selPago)
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
         var.ui.btnGrabaCli.clicked.connect(clientes.Clientes.guardaCli)
         var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
@@ -43,7 +43,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtApel.editingFinished.connect(clientes.Clientes.priMay)
 
         clientes.Clientes.cargaProv(self)
-        var.ui.cmbProv.activated[str].connect(clientes.Clientes.selProv)
+        # var.ui.cmbProv.activated[str].connect(clientes.Clientes.selProv)
 
         events.Eventos.resizeTableCli(self)
         var.ui.tableCliente.clicked.connect(clientes.Clientes.cargaCli)

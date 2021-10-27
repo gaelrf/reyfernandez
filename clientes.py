@@ -8,7 +8,6 @@ import var
 class Clientes():
 
     def validarDNI():
-
         try:
             global dnivalido
             dnivalido = False
@@ -20,58 +19,50 @@ class Clientes():
             dni = dni.upper()   #Convertir Letra a Mayusculas
             var.ui.txtDni.setText(dni)
             if len(dni) == 9:
-
                 dig_control = dni[8]
                 dni =dni[:8]
-
                 if dni[0] in dig_ext:
-
                     dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
-
                 if len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) %23] == dig_control:
-
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: green}')
                     var.ui.lblValidoDni.setText('V')
                     var.ui.txtDni.setStyleSheet('background-color: rgb(255, 255, 255)')
                     dnivalido=True
                 else:
-
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                     var.ui.lblValidoDni.setText('X')
                     var.ui.txtDni.setStyleSheet('background-color: rgb(255, 0, 0)')
                     dnivalido = False
-
             else:
-
                 var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                 var.ui.lblValidoDni.setText('X')
                 var.ui.txtDni.setStyleSheet('background-color: rgb(255, 150, 150)')
                 dnivalido = False
-
         except Exception as error:
-
             print("Error en modulo dni", error)
-    def selSexo(self):
-        try:
-            if var.ui.rbtFem.isChecked():
-                print('Marcado Femenino')
-            if var.ui.rbtHom.isChecked():
-                print('Marcado Masculino')
-        except Exception as error:
-            print('Error en modulo seleccionar sexo',error)
 
-    def selPago(self):
-        try:
-            if var.ui.chkEfectivo.isChecked():
-                print ('Has marcado efectivo')
-            if var.ui.chkTarjeta.isChecked():
-                print('Has marcado tarjeta')
-            if var.ui.chkCargoCuenta.isChecked():
-                print('Has marcado cargo cuenta')
-            if var.ui.chkTransferencia.isChecked():
-                print('Has marcado transferencia')
-        except Exception as error:
-            print('Error en modulo seleccionar sexo', error)
+    # def selSexo(self):
+    #     try:
+    #         if var.ui.rbtFem.isChecked():
+    #             print('Marcado Femenino')
+    #         if var.ui.rbtHom.isChecked():
+    #             print('Marcado Masculino')
+    #     except Exception as error:
+    #         print('Error en modulo seleccionar sexo',error)
+
+    # def selPago(self):
+    #     try:
+    #         if var.ui.chkEfectivo.isChecked():
+    #             print ('Has marcado efectivo')
+    #         if var.ui.chkTarjeta.isChecked():
+    #             print('Has marcado tarjeta')
+    #         if var.ui.chkCargoCuenta.isChecked():
+    #             print('Has marcado cargo cuenta')
+    #         if var.ui.chkTransferencia.isChecked():
+    #             print('Has marcado transferencia')
+    #     except Exception as error:
+    #         print('Error en modulo seleccionar sexo', error)
+
     def cargaProv(self):
         try:
             var.ui.cmbProv.clear()
@@ -80,12 +71,14 @@ class Clientes():
                 var.ui.cmbProv.addItem(i)
         except Exception as error:
             print('Error en modulo cargar provincia', error)
-    def selProv(prov):
-        try:
-            print ('has seleccionado la provincia de ', prov)
-            return prov
-        except Exception as error:
-            print('Error en modulo selecionar provincia', error)
+
+    # def selProv(prov):
+    #     try:
+    #         print ('has seleccionado la provincia de ', prov)
+    #         return prov
+    #     except Exception as error:
+    #         print('Error en modulo selecionar provincia', error)
+
     def cargarFecha(qDate):
         try:
             data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.month(),qDate.year()))
@@ -93,6 +86,7 @@ class Clientes():
             var.dlgcalendar.hide()
         except Exception as error:
             print('Error cargar fecha en txtFecha', error)
+
     def priMay():
         try:
             nome=var.ui.txtNome.text()
@@ -101,6 +95,7 @@ class Clientes():
             var.ui.txtApel.setText(nome.title())
         except Exception as error:
             print('Error en modulo primera Mayuscula', error)
+
     def guardaCli(self):
         try:
             if dnivalido :
@@ -112,8 +107,8 @@ class Clientes():
                     newcli.append(i.text())
                 for i in client:
                     tablecli.append(i.text())
-                newcli.append(var.ui.cmbProv.currentText)
-                newcli.append(var.ui.cmbMun.currentText)
+                newcli.append(var.ui.cmbProv.currentText())
+                newcli.append(var.ui.cmbMun.currentText())
                 if var.ui.rbtHom.isChecked():
                     newcli.append('Hombre')
                 elif var.ui.rbtFem.isChecked():
@@ -124,13 +119,12 @@ class Clientes():
                 if var.ui.chkTarjeta.isChecked():
                     pagos.append('Tarjeta')
                 if var.ui.chkEfectivo.isChecked():
-                    pagos.append('Evectivo')
+                    pagos.append('Efectivo')
                 if var.ui.chkTransferencia.isChecked():
                     pagos.append('Transferencia')
                 #pagos= set(pagos)
                 newcli.append('; '.join(pagos))
                 tablecli.append('; '.join(pagos))
-                print(newcli)
                 row = 0
                 colum=0
                 var.ui.tableCliente.insertRow(row)
@@ -147,24 +141,38 @@ class Clientes():
                 msg.exec()
         except Exception as error:
             print('Error en modulo guardar cliente', error)
+
     def limpiaFrormCli(self):
         try:
             cajas = [var.ui.txtDni,var.ui.txtNome,var.ui.txtApel,var.ui.txtFechaAltaCli,var.ui.txtDir]
             for i in cajas:
                 i.setText('')
-
         except Exception as error:
             print('Error en modulo limpiar formulario', error)
 
     def cargaCli(self):
         try:
-
             fila = var.ui.tableCliente.selectedItems()
             datos = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
             if fila:
                 row = [dato.text () for dato in fila]
-                for i, dato in enumerate(datos):
-                    dato.setText(row[i])
-
+            for i, dato in enumerate(datos):
+                dato.setText(row[i])
+            if 'Efectivo' in row[4]:
+                var.ui.chkEfectivo.setChecked(True)
+            else:
+                var.ui.chkEfectivo.setChecked(False)
+            if 'Transferencia' in row[4]:
+                var.ui.chkTransferencia.setChecked(True)
+            else:
+                var.ui.chkTransferencia.setChecked(False)
+            if 'Tarjeta' in row[4]:
+                var.ui.chkTarjeta.setChecked(True)
+            else:
+                var.ui.chkTarjeta.setChecked(False)
+            if 'Cargo Cuenta' in row[4]:
+                var.ui.chkCargoCuenta.setChecked(True)
+            else:
+                var.ui.chkCargoCuenta.setChecked(False)
         except Exception as error:
             print('Error en cargar datos de cliente', error)

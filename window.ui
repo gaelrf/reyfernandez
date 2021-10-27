@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>725</width>
-    <height>620</height>
+    <width>912</width>
+    <height>882</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,15 +17,17 @@
    <widget class="QLabel" name="lblTitulo">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>350</x>
       <y>20</y>
-      <width>151</width>
+      <width>211</width>
       <height>20</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>18</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -37,8 +39,8 @@
      <rect>
       <x>20</x>
       <y>50</y>
-      <width>691</width>
-      <height>501</height>
+      <width>871</width>
+      <height>781</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -57,20 +59,26 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>671</width>
+        <y>10</y>
+        <width>851</width>
         <height>271</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="title">
-       <string>GroupBox</string>
+       <string>Datos Cliente</string>
       </property>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>170</y>
-         <width>174</width>
+         <y>140</y>
+         <width>321</width>
          <height>22</height>
         </rect>
        </property>
@@ -111,25 +119,12 @@
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="btnSalir">
-       <property name="geometry">
-        <rect>
-         <x>370</x>
-         <y>230</y>
-         <width>72</width>
-         <height>19</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Salir</string>
-       </property>
-      </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>110</y>
-         <width>641</width>
+         <width>831</width>
          <height>24</height>
         </rect>
        </property>
@@ -158,9 +153,9 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
          </widget>
@@ -203,6 +198,13 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
          </widget>
         </item>
        </layout>
@@ -211,8 +213,8 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
-         <width>651</width>
+         <y>170</y>
+         <width>831</width>
          <height>22</height>
         </rect>
        </property>
@@ -248,22 +250,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="chkTarjeta">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Tarjeta</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">chkGroupPago</string>
-          </attribute>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="chkCargoCuenta">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -273,6 +259,38 @@
           </property>
           <property name="text">
            <string>Cargo en cuenta</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">chkGroupPago</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chkTarjeta">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Tarjeta</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">chkGroupPago</string>
@@ -300,9 +318,9 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>140</y>
-         <width>311</width>
+         <x>560</x>
+         <y>20</y>
+         <width>284</width>
          <height>26</height>
         </rect>
        </property>
@@ -323,6 +341,13 @@
         </item>
         <item>
          <widget class="QLineEdit" name="txtFechaAltaCli">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
@@ -337,25 +362,12 @@
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="btnGrabaCli">
-       <property name="geometry">
-        <rect>
-         <x>293</x>
-         <y>230</y>
-         <width>72</width>
-         <height>19</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Guardar</string>
-       </property>
-      </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>641</width>
+         <width>831</width>
          <height>24</height>
         </rect>
        </property>
@@ -378,17 +390,25 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtDir"/>
+         <widget class="QLineEdit" name="txtDir">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>261</width>
-         <height>24</height>
+         <x>11</x>
+         <y>21</y>
+         <width>271</width>
+         <height>26</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -419,20 +439,28 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtDni"/>
+         <widget class="QLineEdit" name="txtDni">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="lblValidoDni">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>20</width>
+            <height>20</height>
            </size>
           </property>
           <property name="text">
@@ -440,27 +468,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="btnLimpiaForm">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
        </layout>
-      </widget>
-      <widget class="QPushButton" name="btnLimpiaForm">
-       <property name="geometry">
-        <rect>
-         <x>634</x>
-         <y>230</y>
-         <width>31</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>51</y>
-         <width>641</width>
+         <width>831</width>
          <height>24</height>
         </rect>
        </property>
@@ -486,7 +508,15 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtApel"/>
+         <widget class="QLineEdit" name="txtApel">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="horizontalSpacer_2">
@@ -529,6 +559,53 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>220</y>
+         <width>361</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QPushButton" name="btnGrabaCli">
+          <property name="text">
+           <string>Guardar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnModifCli">
+          <property name="text">
+           <string>Modificar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnBajaCli">
+          <property name="text">
+           <string>Eliminar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnSalir">
+          <property name="text">
+           <string>Salir</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -537,10 +614,10 @@
      <widget class="QTableWidget" name="tableCliente">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>270</y>
-        <width>681</width>
-        <height>192</height>
+        <x>10</x>
+        <y>310</y>
+        <width>841</width>
+        <height>441</height>
        </rect>
       </property>
       <column>
@@ -595,8 +672,8 @@
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>50</y>
+        <x>30</x>
+        <y>10</y>
         <width>81</width>
         <height>16</height>
        </rect>
@@ -613,7 +690,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>725</width>
+     <width>912</width>
      <height>21</height>
     </rect>
    </property>
@@ -653,11 +730,11 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="rbtGroupSex"/>
   <buttongroup name="chkGroupPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="rbtGroupSex"/>
  </buttongroups>
 </ui>
