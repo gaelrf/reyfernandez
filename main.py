@@ -29,11 +29,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.setupUi(self)
 
         var.ui.btnSalir.clicked.connect(events.Eventos.salir)
-        # var.ui.rbtGroupSex.buttonClicked.connect(clientes.Clientes.selSexo)
-        # var.ui.chkGroupPago.buttonClicked.connect(clientes.Clientes.selPago)
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
         var.ui.btnGrabaCli.clicked.connect(clientes.Clientes.guardaCli)
         var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
+        var.ui.btnBajaCli.clicked.connect(clientes.Clientes.bajaCli)
 
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
@@ -50,11 +49,16 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tableCliente.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
         conexion.Conexion.db_connect(var.filedb)
+        conexion.Conexion.cargarTablaCli(self)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
     window = Main()
+    desktop = QtWidgets.QApplication.desktop()
+    x = (desktop.width() - window.width())//2
+    y = (desktop.height() - window.height())//2
+    window.move(x,y)
     var.dlgaviso = DialogAviso()
     var.dlgcalendar = DialogCalendar()
     window.show()

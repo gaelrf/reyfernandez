@@ -125,14 +125,15 @@ class Clientes():
                 #pagos= set(pagos)
                 newcli.append('; '.join(pagos))
                 tablecli.append('; '.join(pagos))
-                row = 0
-                colum=0
-                var.ui.tableCliente.insertRow(row)
-                for campo in tablecli:
-                    cell =QtWidgets.QTableWidgetItem(str(campo))
-                    var.ui.tableCliente.setItem(row, colum,cell)
-                    colum += 1
+                # row = 0
+                # colum=0
+                # var.ui.tableCliente.insertRow(row)
+                # for campo in tablecli:
+                #     cell =QtWidgets.QTableWidgetItem(str(campo))
+                #     var.ui.tableCliente.setItem(row, colum,cell)
+                #     colum += 1
                 conexion.Conexion.altaCli(newcli)
+                conexion.Conexion.cargarTablaCli(self)
             else:
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
@@ -141,6 +142,15 @@ class Clientes():
                 msg.exec()
         except Exception as error:
             print('Error en modulo guardar cliente', error)
+
+    def bajaCli(self):
+        try:
+            dni = var.ui.txtDni.text()
+            conexion.Conexion.bajaCli(dni)
+            conexion.Conexion.cargarTablaCli(self)
+        except Exception as error:
+            print('Error en modulo borrar cliente', error)
+
 
     def limpiaFrormCli(self):
         try:
@@ -174,5 +184,14 @@ class Clientes():
                 var.ui.chkCargoCuenta.setChecked(True)
             else:
                 var.ui.chkCargoCuenta.setChecked(False)
+            registro = conexion.Conexion.cargaCli(row[0])
+            var.ui.txtDir.setText(registro[0])
+            var.ui.cmbProv.setCurrentText(registro[1])
+            var.ui.cmbMun.setCurrentText(registro[2])
+            if registro[3] == 'Hombre':
+                var.ui.rbtHom.setChecked(True)
+            if registro[3] == 'Mujer':
+                var.ui.rbtFem.setChecked(True)
+
         except Exception as error:
             print('Error en cargar datos de cliente', error)
