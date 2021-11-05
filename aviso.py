@@ -18,7 +18,7 @@ class Ui_Dialog(object):
         self.btnBoxAviso = QtWidgets.QDialogButtonBox(Dialog)
         self.btnBoxAviso.setGeometry(QtCore.QRect(100, 180, 151, 32))
         self.btnBoxAviso.setOrientation(QtCore.Qt.Horizontal)
-        self.btnBoxAviso.setStandardButtons(QtWidgets.QDialogButtonBox.No|QtWidgets.QDialogButtonBox.Yes)
+        self.btnBoxAviso.setStandardButtons(QtWidgets.QDialogButtonBox.No | QtWidgets.QDialogButtonBox.Yes)
         self.btnBoxAviso.setObjectName("btnBoxAviso")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(120, 120, 121, 21))

@@ -5,8 +5,9 @@ import conexion
 from window import *
 import var
 
-class Clientes():
 
+class Clientes():
+    
     def validarDNI():
         try:
             global dnivalido
@@ -14,20 +15,20 @@ class Clientes():
             dni = var.ui.txtDni.text()
             tabla = 'TRWAGMYFPDXBNJZSQVHLCKE'   #
             dig_ext = 'XYZ'                     #
-            reemp_dig_ext = { 'X':'0', 'Y':'1', 'Z':'2'}
+            reemp_dig_ext = {'X': '0', 'Y': '1', 'Z': '2'}
             numeros = '1234567890'
-            dni = dni.upper()   #Convertir Letra a Mayusculas
+            dni = dni.upper()
             var.ui.txtDni.setText(dni)
             if len(dni) == 9:
                 dig_control = dni[8]
-                dni =dni[:8]
+                dni = dni[:8]
                 if dni[0] in dig_ext:
                     dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
-                if len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) %23] == dig_control:
+                if len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) % 23] == dig_control:
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: green}')
                     var.ui.lblValidoDni.setText('V')
                     var.ui.txtDni.setStyleSheet('background-color: rgb(255, 255, 255)')
-                    dnivalido=True
+                    dnivalido = True
                 else:
                     var.ui.lblValidoDni.setStyleSheet('QLabel {color: red}')
                     var.ui.lblValidoDni.setText('X')
@@ -65,10 +66,27 @@ class Clientes():
 
     def cargaProv(self):
         try:
+
             var.ui.cmbProv.clear()
-            prov = ['','A Coruña', 'Lugo', 'Ourense', 'Pontevedra']
-            for i in prov:
+            Clientes.prov = conexion.Conexion.cargarProv(self)
+            provincias = list(Clientes.prov.keys())
+            var.ui.cmbProv.addItem('')
+            for i in provincias:
                 var.ui.cmbProv.addItem(i)
+        except Exception as error:
+            print('Error en modulo cargar provincia', error)
+
+    def cargaMun(self):
+        try:
+
+            var.ui.cmbMun.clear()
+            mun = Clientes.prov[var.ui.cmbProv.currentText()]
+            print(mun)
+            municipios = conexion.Conexion.cargarMun(mun)
+            var.ui.cmbMun.addItem('')
+            for i in municipios:
+                var.ui.cmbMun.addItem(i)
+
         except Exception as error:
             print('Error en modulo cargar provincia', error)
 
@@ -81,7 +99,7 @@ class Clientes():
 
     def cargarFecha(qDate):
         try:
-            data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.month(),qDate.year()))
+            data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
             var.ui.txtFechaAltaCli.setText(str(data))
             var.dlgcalendar.hide()
         except Exception as error:
@@ -89,20 +107,20 @@ class Clientes():
 
     def priMay():
         try:
-            nome=var.ui.txtNome.text()
+            nome = var.ui.txtNome.text()
             var.ui.txtNome.setText(nome.title())
-            nome=var.ui.txtApel.text()
+            nome = var.ui.txtApel.text()
             var.ui.txtApel.setText(nome.title())
         except Exception as error:
             print('Error en modulo primera Mayuscula', error)
 
     def guardaCli(self):
         try:
-            if dnivalido :
+            if dnivalido:
                 newcli = []
-                cliente = [var.ui.txtDni,var.ui.txtFechaAltaCli,var.ui.txtApel,var.ui.txtNome,var.ui.txtDir]
+                cliente = [var.ui.txtDni, var.ui.txtFechaAltaCli, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
                 tablecli = []
-                client = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
+                client = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechaAltaCli]
                 for i in cliente:
                     newcli.append(i.text())
                 for i in client:
@@ -122,7 +140,6 @@ class Clientes():
                     pagos.append('Efectivo')
                 if var.ui.chkTransferencia.isChecked():
                     pagos.append('Transferencia')
-                #pagos= set(pagos)
                 newcli.append('; '.join(pagos))
                 tablecli.append('; '.join(pagos))
                 # row = 0
@@ -151,10 +168,9 @@ class Clientes():
         except Exception as error:
             print('Error en modulo borrar cliente', error)
 
-
     def limpiaFrormCli(self):
         try:
-            cajas = [var.ui.txtDni,var.ui.txtNome,var.ui.txtApel,var.ui.txtFechaAltaCli,var.ui.txtDir]
+            cajas = [var.ui.txtDni, var.ui.txtNome, var.ui.txtApel, var.ui.txtFechaAltaCli, var.ui.txtDir]
             for i in cajas:
                 i.setText('')
         except Exception as error:
@@ -163,9 +179,9 @@ class Clientes():
     def cargaCli(self):
         try:
             fila = var.ui.tableCliente.selectedItems()
-            datos = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechaAltaCli]
+            datos = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechaAltaCli]
             if fila:
-                row = [dato.text () for dato in fila]
+                row = [dato.text() for dato in fila]
             for i, dato in enumerate(datos):
                 dato.setText(row[i])
             if 'Efectivo' in row[4]:
