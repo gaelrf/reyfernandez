@@ -81,7 +81,6 @@ class Clientes():
 
             var.ui.cmbMun.clear()
             mun = Clientes.prov[var.ui.cmbProv.currentText()]
-            print(mun)
             municipios = conexion.Conexion.cargarMun(mun)
             var.ui.cmbMun.addItem('')
             for i in municipios:
@@ -119,12 +118,8 @@ class Clientes():
             if dnivalido:
                 newcli = []
                 cliente = [var.ui.txtDni, var.ui.txtFechaAltaCli, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
-                tablecli = []
-                client = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechaAltaCli]
                 for i in cliente:
                     newcli.append(i.text())
-                for i in client:
-                    tablecli.append(i.text())
                 newcli.append(var.ui.cmbProv.currentText())
                 newcli.append(var.ui.cmbMun.currentText())
                 if var.ui.rbtHom.isChecked():
@@ -141,14 +136,6 @@ class Clientes():
                 if var.ui.chkTransferencia.isChecked():
                     pagos.append('Transferencia')
                 newcli.append('; '.join(pagos))
-                tablecli.append('; '.join(pagos))
-                # row = 0
-                # colum=0
-                # var.ui.tableCliente.insertRow(row)
-                # for campo in tablecli:
-                #     cell =QtWidgets.QTableWidgetItem(str(campo))
-                #     var.ui.tableCliente.setItem(row, colum,cell)
-                #     colum += 1
                 conexion.Conexion.altaCli(newcli)
                 conexion.Conexion.cargarTablaCli(self)
             else:
@@ -159,6 +146,35 @@ class Clientes():
                 msg.exec()
         except Exception as error:
             print('Error en modulo guardar cliente', error)
+
+    def modifCli(self):
+        try:
+            modifcli = []
+            cliente = [var.ui.txtDni, var.ui.txtFechaAltaCli, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
+            for i in cliente:
+                modifcli.append(i.text())
+            modifcli.append(var.ui.cmbProv.currentText())
+            modifcli.append(var.ui.cmbMun.currentText())
+            if var.ui.rbtHom.isChecked():
+                modifcli.append('Hombre')
+            elif var.ui.rbtFem.isChecked():
+                modifcli.append('Mujer')
+            pagos = []
+            if var.ui.chkCargoCuenta.isChecked():
+                pagos.append('Cargo Cuenta')
+            if var.ui.chkTarjeta.isChecked():
+                pagos.append('Tarjeta')
+            if var.ui.chkEfectivo.isChecked():
+                pagos.append('Efectivo')
+            if var.ui.chkTransferencia.isChecked():
+                pagos.append('Transferencia')
+            pagos = set(pagos)
+            modifcli.append('; '.join(pagos))
+            conexion.Conexion.modifCli(modifcli)
+            conexion.Conexion.cargarTablaCli(self)
+
+        except Exception as error:
+            print('Error en modificar datos de cliente', error)
 
     def bajaCli(self):
         try:
@@ -211,3 +227,5 @@ class Clientes():
 
         except Exception as error:
             print('Error en cargar datos de cliente', error)
+
+

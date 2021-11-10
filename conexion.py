@@ -21,7 +21,6 @@ class Conexion():
 
     def altaCli(newcli):
         try:
-            print(newcli)
             query = QtSql.QSqlQuery()
             query.prepare(
                 'insert into clientes (dni, alta, apellido, nombre, direccion, provincia, municipio, sexo, pago)'
@@ -127,14 +126,43 @@ class Conexion():
     def cargarMun(provincia):
         try:
             record = []
-            print(provincia)
             query = QtSql.QSqlQuery()
             query.prepare('select municipio from municipios where provincia_id = :provincia')
             query.bindValue(':provincia', int(provincia))
             if query.exec_():
                 while query.next():
                     record.append(query.value(0))
-                print(record)
                 return record
         except Exception as error:
             print('Error en cargar provincias', error)
+
+    def modifCli(modifcli):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('update clientes set alta = :alta, apellido = :apellido, nombre = :nombre, '
+                          'direccion = :direccion, provincia = :provincia, municipio = :municipio, sexo = :sexo, '
+                          'pago = :pago where dni = :dni')
+            query.bindValue(':dni', str(modifcli[0]))
+            query.bindValue(':alta', str(modifcli[1]))
+            query.bindValue(':apellido', str(modifcli[2]))
+            query.bindValue(':nombre', str(modifcli[3]))
+            query.bindValue(':direccion', str(modifcli[4]))
+            query.bindValue(':provincia', str(modifcli[5]))
+            query.bindValue(':municipio', str(modifcli[6]))
+            query.bindValue(':sexo', str(modifcli[7]))
+            query.bindValue(':pago', str(modifcli[8]))
+            if query.exec_():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Cliente modificado Correctamente')
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('DNI ni Válido')
+                msg.exec()
+
+        except Exception as error:
+            print('Error en modificar client', error)

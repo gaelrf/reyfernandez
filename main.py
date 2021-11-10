@@ -1,3 +1,4 @@
+import locale
 
 import clientes
 import conexion
@@ -6,6 +7,7 @@ from aviso import *
 from windowcal import *
 import sys, var, events
 from datetime import *
+locale.setlocale(locale.LC_ALL, 'es-ES')
 
 
 class DialogAviso(QtWidgets.QDialog):
@@ -26,6 +28,10 @@ class DialogCalendar(QtWidgets.QDialog):
         var.dlgcalendar.calendar.setSelectedDate((QtCore.QDate(annoactual, mesactual, diaactual)))
         var.dlgcalendar.calendar.clicked.connect(clientes.Clientes.cargarFecha)
 
+class FileDialogAbrir(QtWidgets.QFileDialog):
+    def __init__(self):
+
+        super(FileDialogAbrir, self).__init__()
 
 class Main(QtWidgets.QMainWindow):
     def __init__(self):
@@ -41,8 +47,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnGrabaCli.clicked.connect(clientes.Clientes.guardaCli)
         var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
         var.ui.btnBajaCli.clicked.connect(clientes.Clientes.bajaCli)
+        var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCli)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
+        var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)
 
         var.ui.txtDni.editingFinished.connect(clientes.Clientes.validarDNI)
         var.ui.txtNome.editingFinished.connect(clientes.Clientes.priMay)
@@ -55,6 +63,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tableCliente.clicked.connect(clientes.Clientes.cargaCli)
         var.ui.tableCliente.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
+        var.ui.statusbar.addPermanentWidget(var.ui.lblFecha)
+        day=datetime.now()
+        var.ui.lblFecha.setText(day.strftime('%A, %d de %B de %Y').capitalize())
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -66,6 +78,7 @@ if __name__ == '__main__':
     window.move(x, y)
     var.dlgaviso = DialogAviso()
     var.dlgcalendar = DialogCalendar()
+    var.dlgabrir = FileDialogAbrir()
     window.show()
     sys.exit(app.exec())
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

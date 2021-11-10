@@ -28,3 +28,9 @@ class Eventos():
         except Exception as error:
             print('Error en el modulo redimensionar tabla ',error)
 
+    def abrir(self):
+        try:
+            var.dlgabrir.show()
+        except Exception as error:
+            print('Error en el modulo abrir archivo ',error)
+
