@@ -51,6 +51,9 @@ class Main(QtWidgets.QMainWindow):
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)
+        var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
+        var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)
+        var.ui.actionBarImprimir.triggered.connect(events.Eventos.imprimir)
 
         var.ui.txtDni.editingFinished.connect(clientes.Clientes.validarDNI)
         var.ui.txtNome.editingFinished.connect(clientes.Clientes.priMay)
@@ -66,6 +69,13 @@ class Main(QtWidgets.QMainWindow):
         var.ui.statusbar.addPermanentWidget(var.ui.lblFecha)
         day=datetime.now()
         var.ui.lblFecha.setText(day.strftime('%A, %d de %B de %Y').capitalize())
+
+        var.ui.actionBarSalir.triggered.connect(events.Eventos.salir)
+        var.ui.actionBarAbrir.triggered.connect(events.Eventos.abrir)
+        var.ui.actionBarCrearBackup.triggered.connect(events.Eventos.crearBackup)
+        var.ui.actionBarRestaurarBackup.triggered.connect(events.Eventos.restaurarBackup)
+        var.ui.actionBarImprimir.triggered.connect(events.Eventos.imprimir)
+
 
 
 # Press the green button in the gutter to run the script.

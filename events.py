@@ -1,4 +1,10 @@
+import os.path
 import sys
+import zipfile
+import shutil
+from datetime import datetime
+from  PyQt5 import QtPrintSupport
+import conexion
 from window import *
 import var
 
@@ -33,4 +39,51 @@ class Eventos():
             var.dlgabrir.show()
         except Exception as error:
             print('Error en el modulo abrir archivo ',error)
+
+    def crearBackup(self):
+        try:
+            fecha = datetime.today()
+            fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
+            var.copia = (str(fecha)+'_backup.zip')
+            option = QtWidgets.QFileDialog.Options()
+            directorio, filename = var.dlgabrir.getSaveFileName(None, 'Guardar Copia', var.copia,
+                                                                '.zip', options=option)
+            if var.dlgabrir.Accepted and filename !='':
+                fichzip = zipfile.ZipFile(var.copia, 'w')
+                fichzip.write(var.filedb, os.path.basename(var.filedb), zipfile.ZIP_DEFLATED)
+                fichzip.close()
+                shutil.move(str(var.copia), str(directorio))
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Base de datos guardada correctamente')
+                msg.exec()
+        except Exception as error:
+            print('Error en el modulo crear backup ',error)
+    def restaurarBackup (self):
+        try:
+            dirpro = os.getcwd()
+            option = QtWidgets.QFileDialog.Options()
+            filename = var.dlgabrir.getOpenFileName(None, 'Restaurar copia de seguridad', '','*.zip;;All',options=option)
+            if var.dlgabrir.Accepted and filename!=0:
+                file= filename[0]
+                with zipfile.ZipFile(str(file), 'r') as dbdb:
+                    dbdb.extractall()
+                dbdb.close()
+                # shutil.move('dbdb.sqlite',str(dirpro))
+            conexion.Conexion.db_connect(var.filedb)
+            conexion.Conexion.cargarTablaCli(self)
+        except Exception as error:
+            print('Error en el modulo restaurar backup ',error)
+
+    def imprimir(self):
+        try:
+            printdialog = QtPrintSupport.QPrintDialog()
+            if printdialog.exec_():
+                printdialog.show()
+        except Exception as error:
+            print('Error en el modulo imprimir ',error)
+
+
+
 
