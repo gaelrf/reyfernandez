@@ -78,8 +78,8 @@
         <rect>
          <x>10</x>
          <y>140</y>
-         <width>321</width>
-         <height>22</height>
+         <width>661</width>
+         <height>24</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -115,6 +115,29 @@
           <attribute name="buttonGroup">
            <string notr="true">rbtGroupSex</string>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblEnvio">
+          <property name="text">
+           <string>Forma de Envio:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinEnvio"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblRecogida">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Recogida por cliente</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -834,11 +857,11 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="rbtGroupSex"/>
   <buttongroup name="chkGroupPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="rbtGroupSex"/>
  </buttongroups>
 </ui>

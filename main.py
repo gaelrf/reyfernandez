@@ -54,6 +54,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)
         var.ui.actionBarImprimir.triggered.connect(events.Eventos.imprimir)
+        var.ui.actionImportar_Datos.triggered.connect(events.Eventos.ImportarDatos)
 
         var.ui.txtDni.editingFinished.connect(clientes.Clientes.validarDNI)
         var.ui.txtNome.editingFinished.connect(clientes.Clientes.priMay)

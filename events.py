@@ -3,7 +3,11 @@ import sys
 import zipfile
 import shutil
 from datetime import datetime
+
+import xlrd as xlrd
 from  PyQt5 import QtPrintSupport
+from PyQt5.QtWidgets import QMessageBox
+
 import conexion
 from window import *
 import var
@@ -85,5 +89,31 @@ class Eventos():
             print('Error en el modulo imprimir ',error)
 
 
+
+    def ImportarDatos(self):
+        try:
+            documento = xlrd.open_workbook("DATOSCLIENTES.xls")
+            clientes = documento.sheet_by_index(0)
+            filas_clientes = clientes.nrows
+            columnas_clientes = clientes.ncols
+            print("Filas: " + str(filas_clientes) + ". Columnas: " + str(columnas_clientes))
+
+            dirpro = os.getcwd()
+            print(dirpro)
+            option = QtWidgets.QFileDialog.Options()
+            filename = var.dlgabrir.getOpenFileName(None, 'Cargar datos desde Excel', "", '*.xls;;All ',options=option)
+            if var.dlgabrir.Accepted and filename != "":
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Confirmar')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('¿Estás seguro de seleccionar este archivo?')
+                msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+                msg.exec()
+                if msg.StandardButton.Ok: #Arreglar el else
+                   conexion.Conexion.importarDatos(clientes)
+                elif msg:
+                    print("Importación cancelada")
+        except Exception as error:
+            print('Error al cargar dato del excel ', error)
 
 
