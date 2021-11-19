@@ -187,7 +187,7 @@ class Conexion():
                 c4 = clientes.cell_value(i + 1, 3)
                 c5 = clientes.cell_value(i + 1, 4)
                 c6 = clientes.cell_value(i + 1, 5)
-                if c1 in dnis and clientes.Clientes.validarDNI():
+                if c1 in dnis:
                     query.prepare('update clientes set apellido = :apellido, nombre = :nombre, '
                                   'direccion = :direccion, provincia = :provincia, sexo = :sexo '
                                   'where dni = :dni')
