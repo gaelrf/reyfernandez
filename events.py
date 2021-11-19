@@ -92,16 +92,17 @@ class Eventos():
 
     def ImportarDatos(self):
         try:
-            documento = xlrd.open_workbook("DATOSCLIENTES.xls")
+            dirpro = os.getcwd()
+            print(dirpro)
+            option = QtWidgets.QFileDialog.Options()
+            filename = var.dlgabrir.getOpenFileName(None, 'Cargar datos desde Excel', "", '*.xls;;All ',options=option)
+            print(filename)
+            documento = xlrd.open_workbook(filename[0])
             clientes = documento.sheet_by_index(0)
             filas_clientes = clientes.nrows
             columnas_clientes = clientes.ncols
             print("Filas: " + str(filas_clientes) + ". Columnas: " + str(columnas_clientes))
 
-            dirpro = os.getcwd()
-            print(dirpro)
-            option = QtWidgets.QFileDialog.Options()
-            filename = var.dlgabrir.getOpenFileName(None, 'Cargar datos desde Excel', "", '*.xls;;All ',options=option)
             if var.dlgabrir.Accepted and filename != "":
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Confirmar')
@@ -109,9 +110,11 @@ class Eventos():
                 msg.setText('¿Estás seguro de seleccionar este archivo?')
                 msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
                 msg.exec()
-                if msg.StandardButton.Ok: #Arreglar el else
-                   conexion.Conexion.importarDatos(clientes)
-                elif msg:
+                if msg.clickedButton() == msg.button(msg.StandardButton.Ok):
+                   ejecucion = conexion.Conexion.importarDatos(clientes)
+                   if ejecucion:
+                       conexion.Conexion.cargarTablaCli(self)
+                else:
                     print("Importación cancelada")
         except Exception as error:
             print('Error al cargar dato del excel ', error)

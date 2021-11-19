@@ -125,7 +125,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinEnvio"/>
+         <widget class="QSpinBox" name="spinEnvio">
+          <property name="maximum">
+           <number>3</number>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="lblRecogida">
@@ -381,6 +385,10 @@
           <property name="text">
            <string/>
           </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>img/calendario.png</normaloff>img/calendario.png</iconset>
+          </property>
          </widget>
         </item>
        </layout>
@@ -495,6 +503,10 @@
          <widget class="QPushButton" name="btnLimpiaForm">
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>img/reload.png</normaloff>img/reload.png</iconset>
           </property>
          </widget>
         </item>
@@ -736,8 +748,7 @@
     </property>
     <addaction name="actionAbrir"/>
     <addaction name="separator"/>
-    <addaction name="actionExportar_Datos"/>
-    <addaction name="actionImportar_Datos"/>
+    <addaction name="actionImprimir"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
@@ -747,6 +758,9 @@
     </property>
     <addaction name="actionCrear_Backup"/>
     <addaction name="actionRestaurar_Backup"/>
+    <addaction name="separator"/>
+    <addaction name="actionImportar_Datos"/>
+    <addaction name="actionExportar_Datos"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuHerramientas"/>
@@ -813,6 +827,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>img/salir.png</normaloff>img/salir.png</iconset>
+   </property>
    <property name="text">
     <string>BarSalir</string>
    </property>
@@ -821,6 +839,10 @@
    </property>
   </action>
   <action name="actionBarAbrir">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/folder.png</normaloff>img/folder.png</iconset>
+   </property>
    <property name="text">
     <string>BarAbrir</string>
    </property>
@@ -829,16 +851,28 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>img/backup.png</normaloff>img/backup.png</iconset>
+   </property>
    <property name="text">
     <string>BarCreateBackup</string>
    </property>
   </action>
   <action name="actionBarRestaurarBackup">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/backup_restore.png</normaloff>img/backup_restore.png</iconset>
+   </property>
    <property name="text">
     <string>BarRestauraBackup</string>
    </property>
   </action>
   <action name="actionBarImprimir">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/print.png</normaloff>img/print.png</iconset>
+   </property>
    <property name="text">
     <string>BarImprimir</string>
    </property>
@@ -853,15 +887,20 @@
     <string>Exportar Datos</string>
    </property>
   </action>
+  <action name="actionImprimir">
+   <property name="text">
+    <string>Imprimir</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="rbtGroupSex"/>
   <buttongroup name="chkGroupPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="rbtGroupSex"/>
  </buttongroups>
 </ui>

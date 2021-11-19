@@ -39,6 +39,7 @@ class Clientes():
                 var.ui.lblValidoDni.setText('X')
                 var.ui.txtDni.setStyleSheet('background-color: rgb(255, 150, 150)')
                 dnivalido = False
+            return dnivalido
         except Exception as error:
             print("Error en modulo dni", error)
 
@@ -136,13 +137,15 @@ class Clientes():
                 if var.ui.chkTransferencia.isChecked():
                     pagos.append('Transferencia')
                 newcli.append('; '.join(pagos))
+                newcli.append(var.ui.spinEnvio.value())
+                print (newcli)
                 conexion.Conexion.altaCli(newcli)
                 conexion.Conexion.cargarTablaCli(self)
             else:
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Warning)
-                msg.setText('DNI ni Válido')
+                msg.setText('DNI no Válido')
                 msg.exec()
         except Exception as error:
             print('Error en modulo guardar cliente', error)
@@ -170,6 +173,7 @@ class Clientes():
                 pagos.append('Transferencia')
             pagos = set(pagos)
             modifcli.append('; '.join(pagos))
+            modifcli.append(var.ui.spinEnvio.value())
             conexion.Conexion.modifCli(modifcli)
             conexion.Conexion.cargarTablaCli(self)
 

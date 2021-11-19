@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(360, 240)
+        Dialog.resize(355, 239)
         self.btnBoxAviso = QtWidgets.QDialogButtonBox(Dialog)
         self.btnBoxAviso.setGeometry(QtCore.QRect(100, 180, 151, 32))
         self.btnBoxAviso.setOrientation(QtCore.Qt.Horizontal)
-        self.btnBoxAviso.setStandardButtons(QtWidgets.QDialogButtonBox.No | QtWidgets.QDialogButtonBox.Yes)
+        self.btnBoxAviso.setStandardButtons(QtWidgets.QDialogButtonBox.No|QtWidgets.QDialogButtonBox.Yes)
         self.btnBoxAviso.setObjectName("btnBoxAviso")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(120, 120, 121, 21))
@@ -30,6 +30,11 @@ class Ui_Dialog(object):
         self.label_2.setGeometry(QtCore.QRect(160, 30, 47, 13))
         self.label_2.setText("")
         self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(Dialog)
+        self.label_3.setGeometry(QtCore.QRect(150, 30, 61, 71))
+        self.label_3.setText("")
+        self.label_3.setPixmap(QtGui.QPixmap("img/warning.png"))
+        self.label_3.setObjectName("label_3")
 
         self.retranslateUi(Dialog)
         self.btnBoxAviso.accepted.connect(Dialog.accept)
@@ -38,5 +43,5 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Salir"))
         self.label.setText(_translate("Dialog", "Desea Salir?"))
