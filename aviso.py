@@ -15,6 +15,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(355, 239)
+        Dialog.setModal(True)
         self.btnBoxAviso = QtWidgets.QDialogButtonBox(Dialog)
         self.btnBoxAviso.setGeometry(QtCore.QRect(100, 180, 151, 32))
         self.btnBoxAviso.setOrientation(QtCore.Qt.Horizontal)

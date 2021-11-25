@@ -28,6 +28,13 @@ class Eventos():
             var.dlgcalendar.show()
         except Exception as error:
             print('Error al abrir el calendario ',error)
+    def resizeTableArt(self):
+        try:
+            header = var.ui.tableArt.horizontalHeader()
+            for i in range(3):
+                header.setSectionResizeMode(i,QtWidgets.QHeaderView.Stretch)
+        except Exception as error:
+            print('Error en el modulo redimensionar tabla ',error)
     def resizeTableCli(self):
         try:
             header = var.ui.tableCliente.horizontalHeader()
@@ -90,7 +97,7 @@ class Eventos():
 
 
 
-    def ImportarDatos(self):
+    def importarDatos(self):
         try:
             dirpro = os.getcwd()
             print(dirpro)
@@ -120,3 +127,8 @@ class Eventos():
             print('Error al cargar dato del excel ', error)
 
 
+    def exportarDatos(self):
+        try:
+            conexion.Conexion.exportExcel(self)
+        except Exception as error:
+            print('Error en evento exportar datos ', error)

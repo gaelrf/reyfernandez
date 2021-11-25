@@ -1,7 +1,9 @@
 import locale
 
 import clientes
+import articulo
 import conexion
+import informes
 from window import *
 from aviso import *
 from windowcal import *
@@ -41,6 +43,7 @@ class Main(QtWidgets.QMainWindow):
 
         conexion.Conexion.db_connect(var.filedb)
         conexion.Conexion.cargarTablaCli(self)
+        conexion.Conexion.cargarTablaArt(self)
 
         var.ui.btnSalir.clicked.connect(events.Eventos.salir)
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
@@ -48,24 +51,35 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
         var.ui.btnBajaCli.clicked.connect(clientes.Clientes.bajaCli)
         var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCli)
+        var.ui.btnSalirArt.clicked.connect(events.Eventos.salir)
+        var.ui.btnGrabaArt.clicked.connect(articulo.Articulo.guardaArt)
+        var.ui.btnBajaArt.clicked.connect(articulo.Articulo.bajaArt)
+        var.ui.btnModifArt.clicked.connect(articulo.Articulo.modifArt)
+        var.ui.btnBuscaArt.clicked.connect(articulo.Articulo.buscaArt)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)
         var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)
         var.ui.actionBarImprimir.triggered.connect(events.Eventos.imprimir)
-        var.ui.actionImportar_Datos.triggered.connect(events.Eventos.ImportarDatos)
+        var.ui.actionImportar_Datos.triggered.connect(events.Eventos.importarDatos)
+        var.ui.actionExportar_Datos.triggered.connect(events.Eventos.exportarDatos)
+        var.ui.actionListado_Clientes.triggered.connect(informes.Informes.listadoClientes)
 
         var.ui.txtDni.editingFinished.connect(clientes.Clientes.validarDNI)
         var.ui.txtNome.editingFinished.connect(clientes.Clientes.priMay)
         var.ui.txtApel.editingFinished.connect(clientes.Clientes.priMay)
+        var.ui.spinEnvio.valueChanged.connect(clientes.Clientes.envio)
 
         clientes.Clientes.cargaProv(self)
         var.ui.cmbProv.currentIndexChanged.connect(clientes.Clientes.cargaMun)
 
         events.Eventos.resizeTableCli(self)
+        events.Eventos.resizeTableArt(self)
         var.ui.tableCliente.clicked.connect(clientes.Clientes.cargaCli)
         var.ui.tableCliente.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tableArt.clicked.connect(articulo.Articulo.cargaArt)
+        var.ui.tableArt.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
         var.ui.statusbar.addPermanentWidget(var.ui.lblFecha)
         day=datetime.now()

@@ -1,4 +1,8 @@
+from datetime import datetime
+
+import xlwt as xlwt
 from PyQt5 import QtSql, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
 import var
 import xlrd as xlrd
@@ -51,12 +55,12 @@ class Conexion():
         except Exception as error:
             print('Error en Alta cliente', error)
 
-    def bajaCli(dni):
+    def bajaCli(nombre):
         try:
-            print(dni)
+            print(nombre)
             query = QtSql.QSqlQuery()
-            query.prepare('delete from clientes where dni = :dni')
-            query.bindValue(':dni', str(dni))
+            query.prepare('delete from clientes where nombre = :nombre')
+            query.bindValue(':nombre', str(nombre))
             if query.exec_():
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
@@ -67,7 +71,7 @@ class Conexion():
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Information)
-                msg.setText('DNI ni Válido')
+                msg.setText('DNI no Válido')
                 msg.exec()
         except Exception as error:
             print('Error en Baja cliente', error)
@@ -102,11 +106,11 @@ class Conexion():
         try:
             record = []
             query = QtSql.QSqlQuery()
-            query.prepare('select direccion, provincia, municipio, sexo from clientes where dni = :dni')
+            query.prepare('select direccion, provincia, municipio, sexo, envio from clientes where dni = :dni')
             query.bindValue(':dni', str(dni))
             if query.exec_():
                 while query.next():
-                    for i in range(4):
+                    for i in range(5):
                         record.append(query.value(i))
                 return record
 
@@ -143,7 +147,7 @@ class Conexion():
             query = QtSql.QSqlQuery()
             query.prepare('update clientes set alta = :alta, apellido = :apellido, nombre = :nombre, '
                           'direccion = :direccion, provincia = :provincia, municipio = :municipio, sexo = :sexo, '
-                          'pago = :pago where dni = :dni')
+                          'pago = :pago, envio = :envio where dni = :dni')
             query.bindValue(':dni', str(modifcli[0]))
             query.bindValue(':alta', str(modifcli[1]))
             query.bindValue(':apellido', str(modifcli[2]))
@@ -153,6 +157,7 @@ class Conexion():
             query.bindValue(':municipio', str(modifcli[6]))
             query.bindValue(':sexo', str(modifcli[7]))
             query.bindValue(':pago', str(modifcli[8]))
+            query.bindValue(':envio', str(modifcli[9]))
             if query.exec_():
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
@@ -215,3 +220,159 @@ class Conexion():
             return ejecucion
         except Exception as error:
             print('Error al cargar datos del excel ', error)
+
+    def exportExcel(self):
+        try:
+            print('a')
+            fecha = datetime.today()
+            fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
+            var.copia = (str(fecha) + '_dataExport.xls')
+            option = QtWidgets.QFileDialog.Options()
+            directorio, filename = var.dlgabrir.getSaveFileName(None, 'Exportar datos', var.copia, '.xls',
+                                                                options=option)
+            wb = xlwt.Workbook()
+            # add_sheet is used to create sheet.
+            sheet1 = wb.add_sheet('Hoja 1')
+
+            # Cabeceras
+            sheet1.write(0, 0, 'DNI')
+            sheet1.write(0, 1, 'APELIDOS')
+            sheet1.write(0, 2, 'NOME')
+            sheet1.write(0, 3, 'DIRECCION')
+            sheet1.write(0, 4, 'PROVINCIA')
+            sheet1.write(0, 5, 'SEXO')
+            f = 1
+            query = QtSql.QSqlQuery()
+            query.prepare('SELECT *  FROM clientes')
+            if query.exec_() and directorio != '':
+                while query.next():
+                    sheet1.write(f, 0, query.value(0))
+                    sheet1.write(f, 1, query.value(2))
+                    sheet1.write(f, 2, query.value(3))
+                    sheet1.write(f, 3, query.value(4))
+                    sheet1.write(f, 4, query.value(5))
+                    sheet1.write(f, 5, query.value(7))
+                    f += 1
+                try:
+                    msgBox = QMessageBox()
+                    msgBox.setIcon(QtWidgets.QMessageBox.Information)
+                    msgBox.setText("Datos exportados con éxito.")
+                    msgBox.setWindowTitle("Operación completada")
+                    msgBox.setStandardButtons(QMessageBox.Ok)
+                    msgBox.exec()
+                except Exception as error:
+                    print('Error en mensaje generado exportar datos ', error)
+
+                wb.save(directorio)
+
+        except Exception as error:
+            print('Error en conexion para exportar excel ', error)
+    def altaArt(newart):
+        try:
+            query = QtSql.QSqlQuery()
+            print(newart)
+            query.prepare(
+                'insert into articulos (nombre, precio_unidad)'
+                'VALUES (:nombre, :precio_unidad)')
+            query.bindValue(':nombre', str(newart[0]))
+            query.bindValue(':precio_unidad', str(newart[1]))
+            if query.exec_():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Cliente insertado Correctamente')
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Fallo al Insertar Articulo')
+                msg.exec()
+        except Exception as error:
+            print('Error en Alta cliente', error)
+
+    def bajaArt(nombre):
+        try:
+            print(nombre)
+            query = QtSql.QSqlQuery()
+            query.prepare('delete from articulos where codigo = :codigo')
+            query.bindValue(':codigo', str(nombre))
+            msg = QtWidgets.QMessageBox()
+            if query.exec_():
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Articulo borrado Correctamente')
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Fallo al Borrar Articulo')
+                msg.exec()
+        except Exception as error:
+            print('Error en Baja Articulo', error)
+
+    def cargarTablaArt(self):
+
+        try:
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, nombre ,precio_unidad from articulos order by nombre')
+            if query.exec_():
+                while query.next():
+                    codigo = query.value(0)
+                    nombre = query.value(1)
+                    precio_unidad = query.value(2)
+                    var.ui.tableArt.setRowCount(index + 1)
+                    var.ui.tableArt.setItem(index, 0, QtWidgets.QTableWidgetItem(str(codigo)))
+                    var.ui.tableArt.setItem(index, 1, QtWidgets.QTableWidgetItem(nombre))
+                    var.ui.tableArt.setItem(index, 2, QtWidgets.QTableWidgetItem(str(precio_unidad)))
+                    index += 1
+
+        except Exception as error:
+
+            print('Error en mostrar tabla articulos', error)
+
+    def buscarTablaArt(nombre):
+
+        try:
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo ,precio_unidad from articulos where nombre = :nombre')
+            query.bindValue(':nombre', str(nombre))
+            if query.exec_():
+                while query.next():
+                    codigo = query.value(0)
+                    precio_unidad = query.value(1)
+                    var.ui.tableArt.setRowCount(index + 1)
+                    var.ui.tableArt.setItem(index, 0, QtWidgets.QTableWidgetItem(str(codigo)))
+                    var.ui.tableArt.setItem(index, 1, QtWidgets.QTableWidgetItem(nombre))
+                    var.ui.tableArt.setItem(index, 2, QtWidgets.QTableWidgetItem(str(precio_unidad)))
+                    index += 1
+
+        except Exception as error:
+
+            print('Error en mostrar tabla articulos', error)
+
+    def modifArt(modifart):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('update articulos set nombre = :nombre, precio_unidad = :precio_unidad where codigo = :codigo')
+            query.bindValue(':codigo', str(modifart[0]))
+            query.bindValue(':nombre', str(modifart[1]))
+            query.bindValue(':precio_unidad', str(modifart[2]))
+            if query.exec_():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Articulo modificado Correctamente')
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Fallo al Modificar Articulo')
+                msg.exec()
+
+        except Exception as error:
+            print('Error en modificar articulo', error)

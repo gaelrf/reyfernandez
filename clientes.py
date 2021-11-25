@@ -1,6 +1,3 @@
-'''
-
-'''
 import conexion
 from window import *
 import var
@@ -13,8 +10,8 @@ class Clientes():
             global dnivalido
             dnivalido = False
             dni = var.ui.txtDni.text()
-            tabla = 'TRWAGMYFPDXBNJZSQVHLCKE'   #
-            dig_ext = 'XYZ'                     #
+            tabla = 'TRWAGMYFPDXBNJZSQVHLCKE'
+            dig_ext = 'XYZ'
             reemp_dig_ext = {'X': '0', 'Y': '1', 'Z': '2'}
             numeros = '1234567890'
             dni = dni.upper()
@@ -66,6 +63,7 @@ class Clientes():
     #         print('Error en modulo seleccionar sexo', error)
 
     def cargaProv(self):
+
         try:
 
             var.ui.cmbProv.clear()
@@ -78,6 +76,7 @@ class Clientes():
             print('Error en modulo cargar provincia', error)
 
     def cargaMun(self):
+
         try:
 
             var.ui.cmbMun.clear()
@@ -114,6 +113,20 @@ class Clientes():
         except Exception as error:
             print('Error en modulo primera Mayuscula', error)
 
+    def envio(self):
+        try:
+            if var.ui.spinEnvio.value() == 0:
+                var.ui.lblRecogida.setText('Recogida por cliente')
+            elif var.ui.spinEnvio.value() == 1:
+                var.ui.lblRecogida.setText('Envío Nacional Paquetería Express Urgente')
+            elif var.ui.spinEnvio.value() == 2:
+                var.ui.lblRecogida.setText('Envío Nacional Paquetería Normal')
+            elif var.ui.spinEnvio.value() == 3:
+                var.ui.lblRecogida.setText('Envío Interncional')
+        except Exception as error:
+            print('Error en modulo envío', error)
+
+
     def guardaCli(self):
         try:
             if dnivalido:
@@ -127,6 +140,8 @@ class Clientes():
                     newcli.append('Hombre')
                 elif var.ui.rbtFem.isChecked():
                     newcli.append('Mujer')
+                else:
+                    newcli.append('')
                 pagos = []
                 if var.ui.chkCargoCuenta.isChecked():
                     pagos.append('Cargo Cuenta')
@@ -138,7 +153,7 @@ class Clientes():
                     pagos.append('Transferencia')
                 newcli.append('; '.join(pagos))
                 newcli.append(var.ui.spinEnvio.value())
-                print (newcli)
+                print(newcli)
                 conexion.Conexion.altaCli(newcli)
                 conexion.Conexion.cargarTablaCli(self)
             else:
@@ -162,6 +177,8 @@ class Clientes():
                 modifcli.append('Hombre')
             elif var.ui.rbtFem.isChecked():
                 modifcli.append('Mujer')
+            else:
+                modifcli.append('')
             pagos = []
             if var.ui.chkCargoCuenta.isChecked():
                 pagos.append('Cargo Cuenta')
@@ -193,6 +210,16 @@ class Clientes():
             cajas = [var.ui.txtDni, var.ui.txtNome, var.ui.txtApel, var.ui.txtFechaAltaCli, var.ui.txtDir]
             for i in cajas:
                 i.setText('')
+            var.ui.cmbMun.setCurrentText('')
+            var.ui.cmbProv.setCurrentText('')
+            var.ui.rbtGroupSex.setExclusive(False)
+            var.ui.rbtFem.setChecked(False)
+            var.ui.rbtHom.setChecked(False)
+            var.ui.rbtGroupSex.setExclusive(True)
+            var.ui.chkEfectivo.setChecked(False)
+            var.ui.chkTarjeta.setChecked(False)
+            var.ui.chkTransferencia.setChecked(False)
+            var.ui.chkCargoCuenta.setChecked(False)
         except Exception as error:
             print('Error en modulo limpiar formulario', error)
 
@@ -226,10 +253,8 @@ class Clientes():
             var.ui.cmbMun.setCurrentText(registro[2])
             if registro[3] == 'Hombre':
                 var.ui.rbtHom.setChecked(True)
-            if registro[3] == 'Mujer':
+            elif registro[3] == 'Mujer':
                 var.ui.rbtFem.setChecked(True)
-
+            var.ui.spinEnvio.setValue(registro[4])
         except Exception as error:
             print('Error en cargar datos de cliente', error)
-
-
