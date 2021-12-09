@@ -1,6 +1,9 @@
+import locale
+
 import conexion
 from window import *
 import var
+locale.setlocale(locale.LC_ALL, '' )
 
 
 class Articulo():

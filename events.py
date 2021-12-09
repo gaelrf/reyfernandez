@@ -35,6 +35,13 @@ class Eventos():
                 header.setSectionResizeMode(i,QtWidgets.QHeaderView.Stretch)
         except Exception as error:
             print('Error en el modulo redimensionar tabla ',error)
+    def resizeTableFact(self):
+        try:
+            header = var.ui.tableFact.horizontalHeader()
+            for i in range(2):
+                header.setSectionResizeMode(i,QtWidgets.QHeaderView.Stretch)
+        except Exception as error:
+            print('Error en el modulo redimensionar tabla ',error)
     def resizeTableCli(self):
         try:
             header = var.ui.tableCliente.horizontalHeader()

@@ -1,4 +1,5 @@
 import conexion
+import facturacion
 from window import *
 import var
 
@@ -99,7 +100,10 @@ class Clientes():
     def cargarFecha(qDate):
         try:
             data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
-            var.ui.txtFechaAltaCli.setText(str(data))
+            if var.ui.tabWidget.currentIndex()==0:
+                var.ui.txtFechaAltaCli.setText(str(data))
+            if var.ui.tabWidget.currentIndex()==1:
+                var.ui.txtFechaFact.setText(str(data))
             var.dlgcalendar.hide()
         except Exception as error:
             print('Error cargar fecha en txtFecha', error)
@@ -231,6 +235,8 @@ class Clientes():
                 row = [dato.text() for dato in fila]
             for i, dato in enumerate(datos):
                 dato.setText(row[i])
+            var.ui.txtFactDNI.setText(row[0])
+            facturacion.Facturacion.buscaCli(self)
             if 'Efectivo' in row[4]:
                 var.ui.chkEfectivo.setChecked(True)
             else:

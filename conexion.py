@@ -1,3 +1,4 @@
+import locale
 from datetime import datetime
 
 import xlwt as xlwt
@@ -55,12 +56,12 @@ class Conexion():
         except Exception as error:
             print('Error en Alta cliente', error)
 
-    def bajaCli(nombre):
+    def bajaCli(dni):
         try:
-            print(nombre)
+            print(dni)
             query = QtSql.QSqlQuery()
-            query.prepare('delete from clientes where nombre = :nombre')
-            query.bindValue(':nombre', str(nombre))
+            query.prepare('delete from clientes where dni = :dni')
+            query.bindValue(':dni', str(dni))
             if query.exec_():
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
@@ -323,6 +324,7 @@ class Conexion():
                     codigo = query.value(0)
                     nombre = query.value(1)
                     precio_unidad = query.value(2)
+                    precio_unidad = locale.currency(precio_unidad)
                     var.ui.tableArt.setRowCount(index + 1)
                     var.ui.tableArt.setItem(index, 0, QtWidgets.QTableWidgetItem(str(codigo)))
                     var.ui.tableArt.setItem(index, 1, QtWidgets.QTableWidgetItem(nombre))
@@ -360,6 +362,8 @@ class Conexion():
             query.prepare('update articulos set nombre = :nombre, precio_unidad = :precio_unidad where codigo = :codigo')
             query.bindValue(':codigo', str(modifart[0]))
             query.bindValue(':nombre', str(modifart[1]))
+            modifart[2] = modifart[2].replace('€', '')
+            modifart[2] = modifart[2].replace(',', '.')
             query.bindValue(':precio_unidad', str(modifart[2]))
             if query.exec_():
                 msg = QtWidgets.QMessageBox()
@@ -376,3 +380,58 @@ class Conexion():
 
         except Exception as error:
             print('Error en modificar articulo', error)
+
+
+    def buscaDNIFact(dni):
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare('select dni, apellido, nombre from clientes where dni = :dni')
+            query.bindValue( ':dni', str(dni))
+            if query.exec_():
+                while query.next():
+                    registro.append(query.value(1))
+                    registro.append(query.value(2))
+                return registro
+        except Exception as error:
+            print('Error en buscar cliente facturacion', error)
+
+    def altaFact(registro):
+        try:
+            print(registro)
+            query= QtSql.QSqlQuery()
+            query.prepare('insert into facturas (dni, fechafact) values (:dni, :fechafact)')
+            query.bindValue(':dni', str(registro[0]))
+            query.bindValue(':fechafact', str(registro[1]))
+            if query.exec_():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Factura dada de alta Correctamente')
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Fallo al Insertar Factura')
+                msg.exec()
+
+        except Exception as error:
+            print('Error en alta factura', error)
+
+    def cargarTableFact(self):
+        try:
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select codfact, fechafact from facturas')
+            if query.exec_():
+                while query.next():
+                    codigo = str(query.value(0))
+                    fechafact = str(query.value(1))
+                    var.ui.tableFact.setRowCount(index + 1)  # creamos la fila y luego cargamos datos
+                    var.ui.tableFact.setItem(index, 0, QtWidgets.QTableWidgetItem(codigo))
+                    var.ui.tableFact.setItem(index, 1, QtWidgets.QTableWidgetItem(fechafact))
+                    index += 1
+
+        except Exception as error:
+            print('Error en cargar la tabla de facturas', error)

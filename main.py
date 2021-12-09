@@ -3,6 +3,7 @@ import locale
 import clientes
 import articulo
 import conexion
+import facturacion
 import informes
 from window import *
 from aviso import *
@@ -44,6 +45,7 @@ class Main(QtWidgets.QMainWindow):
         conexion.Conexion.db_connect(var.filedb)
         conexion.Conexion.cargarTablaCli(self)
         conexion.Conexion.cargarTablaArt(self)
+        conexion.Conexion.cargarTableFact(self)
 
         var.ui.btnSalir.clicked.connect(events.Eventos.salir)
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
@@ -56,6 +58,9 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnBajaArt.clicked.connect(articulo.Articulo.bajaArt)
         var.ui.btnModifArt.clicked.connect(articulo.Articulo.modifArt)
         var.ui.btnBuscaArt.clicked.connect(articulo.Articulo.buscaArt)
+        var.ui.btnBuscaCliFact.clicked.connect(facturacion.Facturacion.buscaCli)
+        var.ui.btnFechaFact.clicked.connect(events.Eventos.abrirCal)
+        var.ui.btnFacturar.clicked.connect(facturacion.Facturacion.altaFact)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)
@@ -76,10 +81,13 @@ class Main(QtWidgets.QMainWindow):
 
         events.Eventos.resizeTableCli(self)
         events.Eventos.resizeTableArt(self)
+        events.Eventos.resizeTableFact(self)
         var.ui.tableCliente.clicked.connect(clientes.Clientes.cargaCli)
         var.ui.tableCliente.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         var.ui.tableArt.clicked.connect(articulo.Articulo.cargaArt)
         var.ui.tableArt.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tableFact.clicked.connect(facturacion.Facturacion.cargaFact)
+        var.ui.tableFact.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
         var.ui.statusbar.addPermanentWidget(var.ui.lblFecha)
         day=datetime.now()
