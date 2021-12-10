@@ -47,7 +47,6 @@ class Main(QtWidgets.QMainWindow):
         conexion.Conexion.cargarTablaArt(self)
         conexion.Conexion.cargarTableFact(self)
 
-        var.ui.btnSalir.clicked.connect(events.Eventos.salir)
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
         var.ui.btnGrabaCli.clicked.connect(clientes.Clientes.guardaCli)
         var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
@@ -61,6 +60,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnBuscaCliFact.clicked.connect(facturacion.Facturacion.buscaCli)
         var.ui.btnFechaFact.clicked.connect(events.Eventos.abrirCal)
         var.ui.btnFacturar.clicked.connect(facturacion.Facturacion.altaFact)
+        var.ui.btnPDFCli.clicked.connect(informes.Informes.listadoClientes)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)

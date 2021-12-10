@@ -44,7 +44,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabClientes">
      <property name="font">
@@ -101,13 +101,6 @@
          <widget class="QPushButton" name="btnBajaCli">
           <property name="text">
            <string>Eliminar</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnSalir">
-          <property name="text">
-           <string>Salir</string>
           </property>
          </widget>
         </item>
@@ -201,6 +194,13 @@
             <property name="icon">
              <iconset>
               <normaloff>img/reload.png</normaloff>img/reload.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnBuscaCli">
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -653,6 +653,54 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>740</x>
+         <y>210</y>
+         <width>88</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_16">
+        <item>
+         <widget class="QPushButton" name="btnPDFCli">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnReportCli">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>img/print.png</normaloff>img/print.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QTableWidget" name="tableCliente">
       <property name="geometry">
@@ -851,7 +899,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>340</x>
