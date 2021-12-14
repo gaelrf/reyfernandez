@@ -1,3 +1,5 @@
+from PyQt5 import QtWidgets
+
 import conexion
 import var
 
@@ -8,10 +10,17 @@ class Facturacion():
         try:
             dni = var.ui.txtFactDNI.text().upper()
             var.ui.txtFactDNI.setText(dni)
-            registro = conexion.Conexion.buscaDNIFact(dni)
-            print(registro)
-            nombre = registro[0] + ', ' + registro[1]
-            var.ui.lblNoneFact.setText(nombre)
+            registro = conexion.Conexion.buscaNombreFact(dni)
+            if (registro):
+                nombre = registro[0] + ', ' + registro[1]
+                var.ui.lblNoneFact.setText(nombre)
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Cliente no encontrado')
+                msg.exec()
+
         except Exception as error:
             print('Error en modulo buscar clientes factura', error)
 
@@ -36,6 +45,9 @@ class Facturacion():
                 row = [dato.text() for dato in fila]
             for i, dato in enumerate(datos):
                 dato.setText(row[i])
+            dni = conexion.Conexion.buscaDNIFact(row[0])
+            var.ui.txtFactDNI.setText(dni)
+            Facturacion.buscaCli(self)
 
         except Exception as error:
             print('Error en cargar datos de articulo', error)

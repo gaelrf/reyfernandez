@@ -44,7 +44,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tabClientes">
      <property name="font">
@@ -653,7 +653,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>740</x>
@@ -998,7 +998,7 @@
        <rect>
         <x>170</x>
         <y>30</y>
-        <width>481</width>
+        <width>484</width>
         <height>107</height>
        </rect>
       </property>
@@ -1135,9 +1135,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="btnSalirArt">
+          <widget class="QPushButton" name="btnListArt">
            <property name="text">
-            <string>Salir</string>
+            <string>Listar</string>
            </property>
           </widget>
          </item>

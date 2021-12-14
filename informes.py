@@ -88,3 +88,58 @@ class Informes():
             var.cv.drawString(500,40, str('Página %s' % var.cv.getPageNumber()))
         except Exception as error:
             print('Error en pie de informe clientes ', error)
+
+    def listadoProductos (self):
+        try:
+            textotitulo = 'LISTADO PRODUCTOS'
+            var.cv = canvas.Canvas('informes\listadoclientes.pdf')
+            var.cv.setTitle('Listado Clientes')
+            var.cv.setAuthor('Departamento de Administracion')
+            Informes.cabecera(self)
+            Informes.pie(textotitulo)
+            var.cv.setFont('Helvetica-Bold',size=9)
+            var.cv.line(40,700,530,700)
+            var.cv.drawString(255, 690, textotitulo)
+            var.cv.line(40,685,530,685)
+            items = ['Codigo', 'Articulo', 'Precio']
+            var.cv.drawString(65,675,items[0])
+            var.cv.drawString(210,675,items[1])
+            var.cv.drawString(370,675,items[2])
+            var.cv.line(40,670,530,670)
+            var.cv.setFont('Helvetica', size = 8)
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, nombre, precio_unidad from articulos order by nombre')
+            if query.exec_():
+                x=50
+                y=655
+                while query.next():
+                    if y<= 80:
+                        var.cv.setFont('Helvetica', size=6)
+                        var.cv.drawString(460,30,'Página siguiente...')
+                        var.cv.showPage()
+                        Informes.cabecera(self)
+                        var.cv.setFont('Helvetica-Bold', size=9)
+                        var.cv.line(40, 700, 530, 700)
+                        var.cv.drawString(255, 690, textotitulo)
+                        var.cv.line(40, 685, 530, 685)
+                        items = ['DNI', 'Nombre', 'Formas de Pago']
+                        var.cv.drawRightString(65, 675, items[0])
+                        var.cv.drawString(210, 675, items[1])
+                        var.cv.drawString(370, 675, items[2])
+                        var.cv.line(40, 670, 530, 670)
+                        Informes.pie(textotitulo)
+                        var.cv.setFont('Helvetica', size=8)
+                        y = 655
+                    var.cv.drawString(x, y, str(query.value(0)))
+                    var.cv.drawString(x+140,y , str(query.value(1)))
+                    var.cv.drawString(x+310, y, str(query.value(2)))
+                    y = y-15
+            var.cv.save()
+            rootpath = '.\\informes'
+            cont = 0
+            for file in os.listdir(rootpath):
+                if file.endswith('.pdf'):
+                    os.startfile('%s/%s' % (rootpath,file))
+                cont = cont + 1
+        except Exception as error:
+            print('Error en modulo listar productos, ', error)

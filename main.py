@@ -52,7 +52,6 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnLimpiaForm.clicked.connect(clientes.Clientes.limpiaFrormCli)
         var.ui.btnBajaCli.clicked.connect(clientes.Clientes.bajaCli)
         var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCli)
-        var.ui.btnSalirArt.clicked.connect(events.Eventos.salir)
         var.ui.btnGrabaArt.clicked.connect(articulo.Articulo.guardaArt)
         var.ui.btnBajaArt.clicked.connect(articulo.Articulo.bajaArt)
         var.ui.btnModifArt.clicked.connect(articulo.Articulo.modifArt)
@@ -61,6 +60,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFechaFact.clicked.connect(events.Eventos.abrirCal)
         var.ui.btnFacturar.clicked.connect(facturacion.Facturacion.altaFact)
         var.ui.btnPDFCli.clicked.connect(informes.Informes.listadoClientes)
+        var.ui.btnListArt.clicked.connect(informes.Informes.listadoProductos)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)

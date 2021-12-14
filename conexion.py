@@ -382,7 +382,7 @@ class Conexion():
             print('Error en modificar articulo', error)
 
 
-    def buscaDNIFact(dni):
+    def buscaNombreFact(dni):
         try:
             registro = []
             query = QtSql.QSqlQuery()
@@ -435,3 +435,16 @@ class Conexion():
 
         except Exception as error:
             print('Error en cargar la tabla de facturas', error)
+
+    def buscaDNIFact(codfact):
+        try:
+            print(codfact)
+            query= QtSql.QSqlQuery()
+            query.prepare('select dni from facturas where codfact = :codfact')
+            query.bindValue(':codfact', int(codfact))
+            if query.exec_():
+                while query.next():
+                    dni = query.value(0)
+                return dni
+        except Exception as error:
+            print('Error en buscar DNI', error)
