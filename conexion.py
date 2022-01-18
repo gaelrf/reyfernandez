@@ -2,7 +2,7 @@ import locale
 from datetime import datetime
 
 import xlwt as xlwt
-from PyQt5 import QtSql, QtWidgets
+from PyQt5 import QtSql, QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QMessageBox
 
 import var
@@ -426,16 +426,55 @@ class Conexion():
             query.prepare('select codfact, fechafact from facturas')
             if query.exec_():
                 while query.next():
+
                     codigo = str(query.value(0))
-                    fechafact = str(query.value(1))
+                    fecha = query.value(1)
+                    var.btnfacdel = QtWidgets.QPushButton()
+                    icopapelera = QtGui.QPixmap("img/papelera.png")
+                    var.btnfacdel.setFixedSize(24,24)
+                    var.btnfacdel.setIcon(QtGui.QIcon(icopapelera))
                     var.ui.tableFact.setRowCount(index + 1)  # creamos la fila y luego cargamos datos
                     var.ui.tableFact.setItem(index, 0, QtWidgets.QTableWidgetItem(codigo))
-                    var.ui.tableFact.setItem(index, 1, QtWidgets.QTableWidgetItem(fechafact))
+                    var.ui.tableFact.setItem(index, 1, QtWidgets.QTableWidgetItem(fecha))
+                    cell_widget = QtWidgets.QWidget()
+                    lay_out = QtWidgets.QHBoxLayout(cell_widget)
+                    lay_out.addWidget(var.btnfacdel)
+                    var.btnfacdel.clicked.connect(Conexion.bajaFact)
+                    lay_out.setAlignment(QtCore.Qt.AlignVCenter)
+                    var.ui.tableFact.setCellWidget(index, 2, cell_widget)
+                    var.ui.tableFact.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                    var.ui.tableFact.item(index, 1).setTextAlignment(QtCore.Qt.AlignCenter)
                     index += 1
 
         except Exception as error:
             print('Error en cargar la tabla de facturas', error)
 
+    def bajaFact():
+
+        try:
+
+            numfac = var.ui.lblnumfac.text()
+            query = QtSql.QSqlQuery()
+            query.prepare('delete from facturas where codfac = :codfac')
+            query.bindValue(':codfac', int(numfac))
+            if query.exec_():
+                Conexion.cargarTablaFac()
+                msgBox = QMessageBox()
+                msgBox.setIcon(QtWidgets.QMessageBox.Information)
+                msgBox.setText("La factura ha sido dada de baja")
+                msgBox.setWindowTitle("Aviso")
+                msgBox.setStandardButtons(QMessageBox.Ok)
+                msgBox.exec()
+            else:
+                print('Error:', query.lastError().text())
+                msgBox = QtWidgets.QMessageBox()
+                msgBox.setWindowTitle("Aviso")
+                msgBox.setIcon((QtWidgets.QMessageBox.Warning))
+                msgBox.setText("La factura no ha sido dada de baja. Recuerda seleccionarla antes de eliminarla")
+                msgBox.exec()
+
+        except Exception as error:
+          print('Error en dar baja factura', error)
     def buscaDNIFact(codfact):
         try:
             print(codfact)
@@ -448,3 +487,28 @@ class Conexion():
                 return dni
         except Exception as error:
             print('Error en buscar DNI', error)
+
+    def cargarCmbProducto(cmbproducto):
+        try:
+            var.cmbProducto.clear()
+            var.cmbProducto.addItem('')
+            query = QtSql.QSqlQuery()
+            query.prepare('select producto from productos order by producto')
+            if (query.exec_()):
+                while query.next():
+                    var.ui.cmbProducto.addItem(str(query.value(0)))
+        except Exception as error:
+            print('error cargar combo productos',error)
+
+    def obtenerCodPrecio(articulo):
+        try:
+            dato = []
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, precio from productos where producto = :articulo')
+            query.bindValue(':articulo',str(articulo))
+            if query.exec_():
+                while (query.next()):
+                    dato.append(int(query.value(0)))
+                    dato.append(str(query.value(1)))
+        except Exception as error:
+            print('Error en cargar codigo precio')

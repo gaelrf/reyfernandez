@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 import conexion
 import var
@@ -51,3 +51,26 @@ class Facturacion():
 
         except Exception as error:
             print('Error en cargar datos de articulo', error)
+    def cargarLineaVenta(self):
+        try:
+            index = 0
+            var.cmbProducto = QtWidgets.QComboBox()
+            var.txtCantidad = QtWidgets.QLineEdit()
+            #conexion.Conexion.cargarCmbProducto()
+            var.cmbProducto.setFixedSize(150, 25)
+            var.txtCantidad.setFixedSize(60, 25)
+            var.txtCantidad.setAlignment(QtCore.Qt.AlignCenter)
+            var.ui.tableVentas.setRowCount(index + 1)
+            var.ui.tableVentas.setCellWidget(index, 1, var.cmbProducto)
+            var.ui.tableVentas.setCellWidget(index, 3, var.txtCantidad)
+        except Exception as error:
+            print('Error al cargar linea venta ', error)
+    def procesoVenta(self):
+        try:
+            row = var.ui.tableVentas.currentRow()
+            articulo = var.cmbProducto.currentText()
+            precio =conexion.Conexion.obtenerCodProd(articulo)
+            var.ui.tableVentas.setItem(row,2,QtWidgets.QTableWidgetItem(str(precio,1)))
+
+        except Exception as error:
+            print('Error en proceso venta')

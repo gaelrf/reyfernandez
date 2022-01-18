@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>916</width>
+    <width>1058</width>
     <height>918</height>
    </rect>
   </property>
@@ -39,12 +39,12 @@
      <rect>
       <x>20</x>
       <y>50</y>
-      <width>881</width>
+      <width>991</width>
       <height>791</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabClientes">
      <property name="font">
@@ -60,7 +60,7 @@
        <rect>
         <x>0</x>
         <y>10</y>
-        <width>851</width>
+        <width>961</width>
         <height>271</height>
        </rect>
       </property>
@@ -111,7 +111,7 @@
         <rect>
          <x>10</x>
          <y>21</y>
-         <width>841</width>
+         <width>941</width>
          <height>170</height>
         </rect>
        </property>
@@ -707,7 +707,7 @@
        <rect>
         <x>10</x>
         <y>310</y>
-        <width>841</width>
+        <width>951</width>
         <height>441</height>
        </rect>
       </property>
@@ -747,7 +747,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>831</width>
+        <width>921</width>
         <height>91</height>
        </rect>
       </property>
@@ -828,7 +828,7 @@
         <rect>
          <x>500</x>
          <y>10</y>
-         <width>238</width>
+         <width>311</width>
          <height>26</height>
         </rect>
        </property>
@@ -949,6 +949,9 @@
         <height>621</height>
        </rect>
       </property>
+      <property name="columnCount">
+       <number>3</number>
+      </property>
       <column>
        <property name="text">
         <string>Codigo</string>
@@ -957,6 +960,42 @@
       <column>
        <property name="text">
         <string>Fecha Factura</string>
+       </property>
+      </column>
+      <column/>
+     </widget>
+     <widget class="QTableWidget" name="tableVentas">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>120</y>
+        <width>601</width>
+        <height>621</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>Codigo Venta</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Producto</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Precio</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Cantidad</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Total Venta</string>
        </property>
       </column>
      </widget>
@@ -1166,7 +1205,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>916</width>
+     <width>1058</width>
      <height>21</height>
     </rect>
    </property>

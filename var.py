@@ -6,3 +6,4 @@ global dlgabrir
 global copia
 global dlgborrar
 global cv
+global cmbProducto
