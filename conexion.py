@@ -493,10 +493,10 @@ class Conexion():
             var.cmbProducto.clear()
             var.cmbProducto.addItem('')
             query = QtSql.QSqlQuery()
-            query.prepare('select producto from productos order by producto')
+            query.prepare('select nombre from articulos order by nombre')
             if (query.exec_()):
                 while query.next():
-                    var.ui.cmbProducto.addItem(str(query.value(0)))
+                    var.cmbProducto.addItem(str(query.value(0)))
         except Exception as error:
             print('error cargar combo productos',error)
 
@@ -511,4 +511,4 @@ class Conexion():
                     dato.append(int(query.value(0)))
                     dato.append(str(query.value(1)))
         except Exception as error:
-            print('Error en cargar codigo precio')
+            print('Error en cargar codigo precio', error)
