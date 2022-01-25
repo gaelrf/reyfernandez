@@ -510,5 +510,25 @@ class Conexion():
                 while (query.next()):
                     dato.append(int(query.value(0)))
                     dato.append(str(query.value(1)))
+                
         except Exception as error:
             print('Error en cargar codigo precio', error)
+
+
+    def cargarLineasVenta(factura):
+        try:
+            var.ui.tabVentas.clearContents()
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select codventa,precio,cantidad from ventas where factura = :factura')
+            query.bindValue(':factura', int(factura))
+            if query.exec_():
+                while query.next():
+                    codventa = query.value(0)
+                    var.ui.tabVentas.setRowCount(index + 1)
+                    var.ui.tabVentas.setItem(index,0, QtWidgets.QTableWidgetItem(str(codventa)))
+                    var.ui.tabVentas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                    index = index + 1
+
+        except Exception as error:
+            print('error cargar las lines de factura', error)

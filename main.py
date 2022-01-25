@@ -84,6 +84,7 @@ class Main(QtWidgets.QMainWindow):
         events.Eventos.resizeTableCli(self)
         events.Eventos.resizeTableArt(self)
         events.Eventos.resizeTableFact(self)
+        events.Eventos.resizeTableVentas(self)
         var.ui.tableCliente.clicked.connect(clientes.Clientes.cargaCli)
         var.ui.tableCliente.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         var.ui.tableArt.clicked.connect(articulo.Articulo.cargaArt)

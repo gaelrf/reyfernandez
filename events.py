@@ -57,6 +57,16 @@ class Eventos():
         except Exception as error:
             print('Error en el modulo redimensionar tabla ',error)
 
+    def resizeTableVentas(self):
+        try:
+            header = var.ui.tableVentas.horizontalHeader()
+            for i in range(5):
+                header.setSectionResizeMode(i,QtWidgets.QHeaderView.Stretch)
+                if i == 1 or i == 3:
+                    header.setSectionResizeMode(i,QtWidgets.QHeaderView.ResizeToContents)
+        except Exception as error:
+            print('Error en el modulo redimensionar tabla ',error)
+
     def abrir(self):
         try:
             var.dlgabrir.show()

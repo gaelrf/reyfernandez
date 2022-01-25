@@ -39,18 +39,22 @@ class Facturacion():
 
     def cargaFact(self):
         try:
-            fila = var.ui.tableFact.selectedItems()
-            datos = [var.ui.lblCodFact,var.ui.txtFechaFact]
-            if fila:
+            fila = var.ui.tabFacturas.selectedItems()  # seleccionamos la fila
+            datos = [var.ui.lblNumfac, var.ui.txtFechafac]
+            if fila:  # cargamos en row todos los datos de la fila
                 row = [dato.text() for dato in fila]
             for i, dato in enumerate(datos):
                 dato.setText(row[i])
-            dni = conexion.Conexion.buscaDNIFact(row[0])
-            var.ui.txtFactDNI.setText(dni)
-            Facturacion.buscaCli(self)
+            dni = conexion.Conexion.buscaDNIFac(row[0])
+            var.ui.txtDNIfac.setText(dni)
+            registro = conexion.Conexion.buscaClifac(dni)
+            if registro:
+                nombre = registro[0] + ', ' + registro[1]
+                var.ui.lblNomfac.setText(nombre)
+            conexion.Conexion.cargarLineasVenta(str(var.ui.lblNumfac.text()))
 
         except Exception as error:
-            print('Error en cargar datos de articulo', error)
+            print('error alta en factura', error)
     def cargarLineaVenta(self):
         try:
             index = 0
@@ -73,4 +77,5 @@ class Facturacion():
             var.ui.tableVentas.setItem(row,2,QtWidgets.QTableWidgetItem(str(precio,1)))
 
         except Exception as error:
-            print('Error en proceso venta')
+            print('Error en proceso venta ', error)
+
