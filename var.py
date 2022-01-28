@@ -7,3 +7,5 @@ global copia
 global dlgborrar
 global cv
 global cmbProducto
+global precio
+global codprod

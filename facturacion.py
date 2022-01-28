@@ -2,6 +2,9 @@ from PyQt5 import QtWidgets, QtCore
 
 import conexion
 import var
+from babel.numbers import format_currency
+import locale
+locale.setlocale( locale.LC_ALL,'')
 
 
 class Facturacion():
@@ -39,43 +42,78 @@ class Facturacion():
 
     def cargaFact(self):
         try:
-            fila = var.ui.tabFacturas.selectedItems()  # seleccionamos la fila
-            datos = [var.ui.lblNumfac, var.ui.txtFechafac]
+            fila = var.ui.tableFact.selectedItems()  # seleccionamos la fila
+            datos = [var.ui.lblCodFact, var.ui.txtFechaFact]
             if fila:  # cargamos en row todos los datos de la fila
                 row = [dato.text() for dato in fila]
             for i, dato in enumerate(datos):
                 dato.setText(row[i])
-            dni = conexion.Conexion.buscaDNIFac(row[0])
-            var.ui.txtDNIfac.setText(dni)
-            registro = conexion.Conexion.buscaClifac(dni)
+            dni = conexion.Conexion.buscaDNIFact(row[0])
+            var.ui.txtFactDNI.setText(dni)
+            registro = conexion.Conexion.buscaNombreFact(dni)
             if registro:
                 nombre = registro[0] + ', ' + registro[1]
-                var.ui.lblNomfac.setText(nombre)
-            conexion.Conexion.cargarLineasVenta(str(var.ui.lblNumfac.text()))
+                var.ui.lblNoneFact.setText(nombre)
+            conexion.Conexion.cargarLineasVenta(str(var.ui.lblCodFact.text()))
 
         except Exception as error:
             print('error alta en factura', error)
-    def cargarLineaVenta(self):
+    def cargaLineaVenta(index):
         try:
-            index = 0
             var.cmbProducto = QtWidgets.QComboBox()
+            var.cmbProducto.currentIndexChanged.connect(Facturacion.procesoVenta)
+            var.cmbProducto.setFixedSize(170,25)
+            conexion.Conexion.cargarCmbProducto(self=None)
             var.txtCantidad = QtWidgets.QLineEdit()
-            #conexion.Conexion.cargarCmbProducto()
-            var.cmbProducto.setFixedSize(150, 25)
-            var.txtCantidad.setFixedSize(60, 25)
+            var.txtCantidad.editingFinished.connect(Facturacion.totalLineaVenta)
+            var.txtCantidad.setFixedSize(80,25)
             var.txtCantidad.setAlignment(QtCore.Qt.AlignCenter)
-            var.ui.tableVentas.setRowCount(index + 1)
-            var.ui.tableVentas.setCellWidget(index, 1, var.cmbProducto)
-            var.ui.tableVentas.setCellWidget(index, 3, var.txtCantidad)
+            var.ui.tableVentas.setRowCount(index+1)
+            var.ui.tableVentas.setCellWidget(index,1,var.cmbProducto)
+            var.ui.tableVentas.setCellWidget(index,3,var.txtCantidad)
         except Exception as error:
             print('Error al cargar linea venta ', error)
+
     def procesoVenta(self):
         try:
-            row = var.ui.tableVentas.currentRow()
             articulo = var.cmbProducto.currentText()
-            precio =conexion.Conexion.obtenerCodProd(articulo)
-            var.ui.tableVentas.setItem(row,2,QtWidgets.QTableWidgetItem(str(precio,1)))
+            dato =conexion.Conexion.obtenerCodPrecio(articulo)
+            row = var.ui.tableVentas.currentRow()
+            var.precio = dato[1]
+            precioEu = format_currency(dato[1], 'EUR', locale='de_DE')
+            var.codpro = dato[0]
+            var.ui.tableVentas.setItem(row, 2, QtWidgets.QTableWidgetItem(str(precioEu)))
+            var.ui.tableVentas.item(row, 2).setTextAlignment(QtCore.Qt.AlignCenter)
 
         except Exception as error:
             print('Error en proceso venta ', error)
 
+
+    def totalLineaVenta(self = None):
+        try:
+            venta = []
+            row = var.ui.tableVentas.currentRow()
+            cantidad = round(float(var.txtCantidad.text().replace(",", ".")), 2)
+            totalLinea = round(float(var.precio) * float(cantidad), 2)
+            var.ui.tableVentas.setItem(row, 4, QtWidgets.QTableWidgetItem(str(totalLinea) + '€'))
+            var.ui.tableVentas.item(row, 4).setTextAlignment(QtCore.Qt.AlignRight)
+            codfac = var.ui.lblNumFactura.text()
+            venta.append(int(codfac))
+            venta.append(int(var.codpro))
+            venta.append((float(var.precio)))
+            venta.append(float(cantidad))
+            conexion.Conexion.cargarVenta(venta)
+
+        except Exception as error:
+            print('Error al procesar el total de una venta ', error)
+
+    def limpiarFacturas(self):
+        try:
+            var.ui.txtDNIFac.setText("")
+            var.ui.lblNumFactura.setText("")
+            var.ui.txtFechaFac.setText("")
+            var.ui.lblNomFac.setText("")
+            conexion.Conexion.cargaTabFacturas(self)
+
+        except Exception as error:
+            print('Error al limpiar campos de factura ', error)

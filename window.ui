@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1058</width>
+    <width>1068</width>
     <height>918</height>
    </rect>
   </property>
@@ -946,11 +946,11 @@
         <x>30</x>
         <y>120</y>
         <width>281</width>
-        <height>621</height>
+        <height>611</height>
        </rect>
       </property>
       <property name="columnCount">
-       <number>3</number>
+       <number>4</number>
       </property>
       <column>
        <property name="text">
@@ -962,6 +962,11 @@
         <string>Fecha Factura</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string/>
+       </property>
+      </column>
       <column/>
      </widget>
      <widget class="QTableWidget" name="tableVentas">
@@ -970,7 +975,7 @@
         <x>340</x>
         <y>120</y>
         <width>601</width>
-        <height>621</height>
+        <height>491</height>
        </rect>
       </property>
       <column>
@@ -1205,7 +1210,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1058</width>
+     <width>1068</width>
      <height>21</height>
     </rect>
    </property>

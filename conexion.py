@@ -5,6 +5,7 @@ import xlwt as xlwt
 from PyQt5 import QtSql, QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QMessageBox
 
+import facturacion
 import var
 import xlrd as xlrd
 
@@ -488,7 +489,7 @@ class Conexion():
         except Exception as error:
             print('Error en buscar DNI', error)
 
-    def cargarCmbProducto(cmbproducto):
+    def cargarCmbProducto(self):
         try:
             var.cmbProducto.clear()
             var.cmbProducto.addItem('')
@@ -514,21 +515,95 @@ class Conexion():
         except Exception as error:
             print('Error en cargar codigo precio', error)
 
+    def cargarVenta(venta):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('insert into ventas (factura, articulo, precio, cantidad) '
+                          'values (:factura, :articulo, :precio, :cantidad)')
+            query.bindValue(':factura', venta[0])
+            query.bindValue(':articulo', venta[1])
+            query.bindValue(':precio', venta[2])
+            query.bindValue(':cantidad', venta[3])
+            if query.exec_():
+                var.ui.lblVenta.setText("Venta realizada")
+                var.ui.lblVenta.setStyleSheet('QLabel {color: green;}')
+                Conexion.cargarLineasVenta(venta[0])
+            else:
+                var.ui.lblVenta.setText("Error en venta")
+                var.ui.lblVenta.setStyleSheet('QLabel {color: red;}')
+
+        except Exception as error:
+            print('Error al cargar venta ', error)
 
     def cargarLineasVenta(factura):
         try:
-            var.ui.tabVentas.clearContents()
+
+            suma = 0.0
+            var.ui.tableVentas.clearContents()
             index = 0
             query = QtSql.QSqlQuery()
-            query.prepare('select codventa,precio,cantidad from ventas where factura = :factura')
+            query.prepare('select codventa, precio, cantidad, articulo from ventas where factura = :factura')
             query.bindValue(':factura', int(factura))
             if query.exec_():
                 while query.next():
                     codventa = query.value(0)
-                    var.ui.tabVentas.setRowCount(index + 1)
-                    var.ui.tabVentas.setItem(index,0, QtWidgets.QTableWidgetItem(str(codventa)))
-                    var.ui.tabVentas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                    precio = str(query.value(1))
+                    cantidad = str(query.value(2))
+                    prod = query.value(3)
+
+                    producto = Conexion.buscaArt(prod)
+
+                    suma = suma + (float(precio) * float(cantidad))
+                    var.ui.tableVentas.setRowCount(index + 1)
+                    var.ui.tableVentas.setItem(index,0, QtWidgets.QTableWidgetItem(str(codventa)))
+                    var.ui.tableVentas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                    var.ui.tableVentas.setItem(index, 1, QtWidgets.QTableWidgetItem(str(producto)))
+                    var.ui.tableVentas.item(index, 1).setTextAlignment(QtCore.Qt.AlignCenter)
+                    var.ui.tableVentas.setItem(index, 2, QtWidgets.QTableWidgetItem(str(precio + '€')))
+                    var.ui.tableVentas.item(index, 2).setTextAlignment(QtCore.Qt.AlignRight)
+                    var.ui.tableVentas.setItem(index, 3, QtWidgets.QTableWidgetItem(str(cantidad)))
+                    var.ui.tableVentas.item(index, 3).setTextAlignment(QtCore.Qt.AlignCenter)
+                    var.ui.tableVentas.setItem(index, 4, QtWidgets.QTableWidgetItem(str(float(precio) * float(cantidad))+ '€'))
+                    var.ui.tableVentas.item(index, 4).setTextAlignment(QtCore.Qt.AlignRight)
                     index = index + 1
+            facturacion.Facturacion.cargaLineaVenta(index)
+            iva = suma * 0.21
+            total = suma + iva
+            var.ui.lblSubTotal.setText(str(round(suma,2)) + '€')
+            var.ui.lblIva.setText(str(round(iva, 2)) + '€')
+            var.ui.lblTotal.setText(str(round(total, 2)) + '€')
 
         except Exception as error:
             print('error cargar las lines de factura', error)
+
+    def buscaArt(prod):
+        try:
+            query2 = QtSql.QSqlQuery()
+            query2.prepare('select nombre from productos where codigo = :codigo')
+            query2.bindValue(':codigo', int(prod))
+            if query2.exec_():
+                while query2.next():
+                    producto = query2.value(0)
+
+            return producto
+
+        except Exception as error:
+            print('error cargar las líneas de venta', error)
+
+    def borrarVenta(self):
+        try:
+            row = var.ui.tabVentas.selectedItems()
+            codVenta = row[0].text()
+            query = QtSql.QSqlQuery()
+            query.prepare('delete from ventas where codventa = :codventa')
+            query.bindValue(':codventa', int(codVenta))
+            if query.exec_():
+                facturacion.Facturacion.cargaFac(self)
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Venta eliminada')
+                msg.exec()
+
+        except Exception as error:
+            print('Error al borrar una venta ', error)

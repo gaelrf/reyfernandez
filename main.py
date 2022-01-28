@@ -46,7 +46,7 @@ class Main(QtWidgets.QMainWindow):
         conexion.Conexion.cargarTablaCli(self)
         conexion.Conexion.cargarTablaArt(self)
         conexion.Conexion.cargarTableFact(self)
-        facturacion.Facturacion.cargarLineaVenta(self)
+        facturacion.Facturacion.cargaLineaVenta(0)
         conexion.Conexion.cargarCmbProducto(self)
 
         var.ui.btnCalen.clicked.connect(events.Eventos.abrirCal)
