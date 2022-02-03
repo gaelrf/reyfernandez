@@ -44,7 +44,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabClientes">
      <property name="font">
@@ -257,8 +257,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>img/calendario.png</normaloff>img/calendario.png</iconset>
+             <iconset resource="img/calendar.qrc">
+              <normaloff>:/newPrefix/calendario.png</normaloff>:/newPrefix/calendario.png</iconset>
             </property>
            </widget>
           </item>
@@ -1378,14 +1378,16 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="img/calendar.qrc"/>
+ </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="rbtGroupSex"/>
   <buttongroup name="chkGroupPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="rbtGroupSex"/>
  </buttongroups>
 </ui>
