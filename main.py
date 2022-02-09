@@ -41,6 +41,7 @@ class Main(QtWidgets.QMainWindow):
         super(Main, self).__init__()
         var.ui = Ui_MainWindow()
         var.ui.setupUi(self)
+        conexion.Conexion.createDB(var.filedb)
 
         conexion.Conexion.db_connect(var.filedb)
         conexion.Conexion.cargarTablaCli(self)

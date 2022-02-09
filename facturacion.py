@@ -77,13 +77,18 @@ class Facturacion():
     def procesoVenta(self):
         try:
             articulo = var.cmbProducto.currentText()
-            dato =conexion.Conexion.obtenerCodPrecio(articulo)
             row = var.ui.tableVentas.currentRow()
-            var.precio = dato[1]
-            precioEu = format_currency(dato[1], 'EUR', locale='de_DE')
-            var.codpro = dato[0]
-            var.ui.tableVentas.setItem(row, 2, QtWidgets.QTableWidgetItem(str(precioEu)))
-            var.ui.tableVentas.item(row, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+            if (articulo!=''):
+                dato =conexion.Conexion.obtenerCodPrecio(articulo)
+                var.precio = dato[1]
+                precioEu = format_currency(dato[1], 'EUR', locale='de_DE')
+                var.codpro = dato[0]
+                var.ui.tableVentas.setItem(row, 2, QtWidgets.QTableWidgetItem(str(precioEu)))
+                var.ui.tableVentas.item(row, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+            else:
+                var.ui.tableVentas.setItem(row, 2, QtWidgets.QTableWidgetItem(None))
+                var.ui.tableVentas.item(row, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+
 
         except Exception as error:
             print('Error en proceso venta ', error)
@@ -97,7 +102,8 @@ class Facturacion():
             totalLinea = round(float(var.precio) * float(cantidad), 2)
             var.ui.tableVentas.setItem(row, 4, QtWidgets.QTableWidgetItem(str(totalLinea) + '€'))
             var.ui.tableVentas.item(row, 4).setTextAlignment(QtCore.Qt.AlignRight)
-            codfac = var.ui.lblNumFactura.text()
+            codfac = var.ui.lblCodFact.text()
+            print(codfac)
             venta.append(int(codfac))
             venta.append(int(var.codpro))
             venta.append((float(var.precio)))

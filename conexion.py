@@ -1,5 +1,8 @@
 import locale
+import os.path
+import sqlite3
 from datetime import datetime
+from fileinput import filename
 
 import xlwt as xlwt
 from PyQt5 import QtSql, QtWidgets, QtCore, QtGui
@@ -11,6 +14,25 @@ import xlrd as xlrd
 
 
 class Conexion():
+    def createDB(self):
+        try:
+            con = sqlite3.connect(database=filename)
+            cur = con.cursor()
+            cur.execute('CREATE TABLE IF NOT EXISTS clientes ( dni TEXT NOT NULL, alta TEXT, apellido TEXT NOT NULL, '
+                        'nombre TEXT, direccion TEXT, provincia TEXT, municipio TEXT, sexo TEXT, pago TEXT, '
+                        'envio INTEGER, PRIMARY KEY(dni))')
+            con.commit()
+            con.close()
+
+            if not os.path.exists('.\\informes'):
+                os.mkdir('.\\informes')
+
+        except Exception as error:
+            msg = QtWidgets.QMessageBox()
+            msg.setWindowTitle('Aviso')
+            msg.setIcon(QtWidgets.QMessageBox.Warning)
+            msg.setText('error')
+            msg.exec()
     def db_connect(filedb):
         try:
             db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
@@ -450,16 +472,19 @@ class Conexion():
         except Exception as error:
             print('Error en cargar la tabla de facturas', error)
 
-    def bajaFact():
+    def bajaFact(self):
 
         try:
 
-            numfac = var.ui.lblnumfac.text()
+            numfact = var.ui.lblCodFact.text()
             query = QtSql.QSqlQuery()
-            query.prepare('delete from facturas where codfac = :codfac')
-            query.bindValue(':codfac', int(numfac))
+            query.prepare('delete from facturas where codfact = :codfact')
+            query.bindValue(':codfact', int(numfact))
             if query.exec_():
-                Conexion.cargarTablaFac()
+                subquery =QtSql.QSqlQuery()
+                subquery.prepare('delete from ventas where factura = :factura')
+                subquery.bindValue(':factura', int(numfact))
+                Conexion.cargarTableFact(self)
                 msgBox = QMessageBox()
                 msgBox.setIcon(QtWidgets.QMessageBox.Information)
                 msgBox.setText("La factura ha sido dada de baja")
@@ -501,16 +526,17 @@ class Conexion():
         except Exception as error:
             print('error cargar combo productos',error)
 
-    def obtenerCodPrecio(articulo):
+    def obtenerCodPrecio(producto):
         try:
             dato = []
             query = QtSql.QSqlQuery()
-            query.prepare('select codigo, precio from productos where producto = :articulo')
-            query.bindValue(':articulo',str(articulo))
+            query.prepare('select codigo, precio_unidad from articulos where nombre = :producto')
+            query.bindValue(':producto',str(producto))
             if query.exec_():
                 while (query.next()):
                     dato.append(int(query.value(0)))
                     dato.append(str(query.value(1)))
+                return dato
                 
         except Exception as error:
             print('Error en cargar codigo precio', error)
@@ -569,9 +595,9 @@ class Conexion():
             facturacion.Facturacion.cargaLineaVenta(index)
             iva = suma * 0.21
             total = suma + iva
-            var.ui.lblSubTotal.setText(str(round(suma,2)) + '€')
-            var.ui.lblIva.setText(str(round(iva, 2)) + '€')
-            var.ui.lblTotal.setText(str(round(total, 2)) + '€')
+            var.ui.lblSubPrecio.setText(str(round(suma,2)) + '€')
+            var.ui.lblImpuestosPrecio.setText(str(round(iva, 2)) + '€')
+            var.ui.lblTotalPrecio.setText(str(round(total, 2)) + '€')
 
         except Exception as error:
             print('error cargar las lines de factura', error)
@@ -579,7 +605,7 @@ class Conexion():
     def buscaArt(prod):
         try:
             query2 = QtSql.QSqlQuery()
-            query2.prepare('select nombre from productos where codigo = :codigo')
+            query2.prepare('select nombre from articulos where codigo = :codigo')
             query2.bindValue(':codigo', int(prod))
             if query2.exec_():
                 while query2.next():
