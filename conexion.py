@@ -31,8 +31,9 @@ class Conexion():
             msg = QtWidgets.QMessageBox()
             msg.setWindowTitle('Aviso')
             msg.setIcon(QtWidgets.QMessageBox.Warning)
-            msg.setText('error')
+            msg.setText(error)
             msg.exec()
+
     def db_connect(filedb):
         try:
             db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
@@ -291,6 +292,7 @@ class Conexion():
 
         except Exception as error:
             print('Error en conexion para exportar excel ', error)
+
     def altaArt(newart):
         try:
             query = QtSql.QSqlQuery()
@@ -382,7 +384,8 @@ class Conexion():
     def modifArt(modifart):
         try:
             query = QtSql.QSqlQuery()
-            query.prepare('update articulos set nombre = :nombre, precio_unidad = :precio_unidad where codigo = :codigo')
+            query.prepare('update articulos set nombre = :nombre, precio_unidad = :precio_unidad '
+                          'where codigo = :codigo')
             query.bindValue(':codigo', str(modifart[0]))
             query.bindValue(':nombre', str(modifart[1]))
             modifart[2] = modifart[2].replace('€', '')
@@ -404,13 +407,12 @@ class Conexion():
         except Exception as error:
             print('Error en modificar articulo', error)
 
-
     def buscaNombreFact(dni):
         try:
             registro = []
             query = QtSql.QSqlQuery()
             query.prepare('select dni, apellido, nombre from clientes where dni = :dni')
-            query.bindValue( ':dni', str(dni))
+            query.bindValue(':dni', str(dni))
             if query.exec_():
                 while query.next():
                     registro.append(query.value(1))
@@ -422,7 +424,7 @@ class Conexion():
     def altaFact(registro):
         try:
             print(registro)
-            query= QtSql.QSqlQuery()
+            query = QtSql.QSqlQuery()
             query.prepare('insert into facturas (dni, fechafact) values (:dni, :fechafact)')
             query.bindValue(':dni', str(registro[0]))
             query.bindValue(':fechafact', str(registro[1]))
@@ -454,7 +456,7 @@ class Conexion():
                     fecha = query.value(1)
                     var.btnfacdel = QtWidgets.QPushButton()
                     icopapelera = QtGui.QPixmap("img/papelera.png")
-                    var.btnfacdel.setFixedSize(24,24)
+                    var.btnfacdel.setFixedSize(24, 24)
                     var.btnfacdel.setIcon(QtGui.QIcon(icopapelera))
                     var.ui.tableFact.setRowCount(index + 1)  # creamos la fila y luego cargamos datos
                     var.ui.tableFact.setItem(index, 0, QtWidgets.QTableWidgetItem(codigo))
@@ -481,7 +483,7 @@ class Conexion():
             query.prepare('delete from facturas where codfact = :codfact')
             query.bindValue(':codfact', int(numfact))
             if query.exec_():
-                subquery =QtSql.QSqlQuery()
+                subquery = QtSql.QSqlQuery()
                 subquery.prepare('delete from ventas where factura = :factura')
                 subquery.bindValue(':factura', int(numfact))
                 Conexion.cargarTableFact(self)
@@ -500,11 +502,12 @@ class Conexion():
                 msgBox.exec()
 
         except Exception as error:
-          print('Error en dar baja factura', error)
+            print('Error en dar baja factura', error)
+
     def buscaDNIFact(codfact):
         try:
             print(codfact)
-            query= QtSql.QSqlQuery()
+            query = QtSql.QSqlQuery()
             query.prepare('select dni from facturas where codfact = :codfact')
             query.bindValue(':codfact', int(codfact))
             if query.exec_():
@@ -524,14 +527,14 @@ class Conexion():
                 while query.next():
                     var.cmbProducto.addItem(str(query.value(0)))
         except Exception as error:
-            print('error cargar combo productos',error)
+            print('error cargar combo productos', error)
 
     def obtenerCodPrecio(producto):
         try:
             dato = []
             query = QtSql.QSqlQuery()
             query.prepare('select codigo, precio_unidad from articulos where nombre = :producto')
-            query.bindValue(':producto',str(producto))
+            query.bindValue(':producto', str(producto))
             if query.exec_():
                 while (query.next()):
                     dato.append(int(query.value(0)))
@@ -581,7 +584,7 @@ class Conexion():
 
                     suma = suma + (float(precio) * float(cantidad))
                     var.ui.tableVentas.setRowCount(index + 1)
-                    var.ui.tableVentas.setItem(index,0, QtWidgets.QTableWidgetItem(str(codventa)))
+                    var.ui.tableVentas.setItem(index, 0, QtWidgets.QTableWidgetItem(str(codventa)))
                     var.ui.tableVentas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
                     var.ui.tableVentas.setItem(index, 1, QtWidgets.QTableWidgetItem(str(producto)))
                     var.ui.tableVentas.item(index, 1).setTextAlignment(QtCore.Qt.AlignCenter)
@@ -589,13 +592,14 @@ class Conexion():
                     var.ui.tableVentas.item(index, 2).setTextAlignment(QtCore.Qt.AlignRight)
                     var.ui.tableVentas.setItem(index, 3, QtWidgets.QTableWidgetItem(str(cantidad)))
                     var.ui.tableVentas.item(index, 3).setTextAlignment(QtCore.Qt.AlignCenter)
-                    var.ui.tableVentas.setItem(index, 4, QtWidgets.QTableWidgetItem(str(float(precio) * float(cantidad))+ '€'))
+                    var.ui.tableVentas.setItem(index, 4, QtWidgets.QTableWidgetItem(str(float(precio) * float(cantidad))
+                                                                                    + '€'))
                     var.ui.tableVentas.item(index, 4).setTextAlignment(QtCore.Qt.AlignRight)
                     index = index + 1
             facturacion.Facturacion.cargaLineaVenta(index)
             iva = suma * 0.21
             total = suma + iva
-            var.ui.lblSubPrecio.setText(str(round(suma,2)) + '€')
+            var.ui.lblSubPrecio.setText(str(round(suma, 2)) + '€')
             var.ui.lblImpuestosPrecio.setText(str(round(iva, 2)) + '€')
             var.ui.lblTotalPrecio.setText(str(round(total, 2)) + '€')
 

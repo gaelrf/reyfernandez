@@ -3,7 +3,7 @@ import locale
 import conexion
 from window import *
 import var
-locale.setlocale(locale.LC_ALL, '' )
+locale.setlocale(locale.LC_ALL, '')
 
 
 class Articulo():
@@ -41,10 +41,11 @@ class Articulo():
             conexion.Conexion.cargarTablaArt(self)
         except Exception as error:
             print('Error en modulo borrar articulo', error)
+
     def cargaArt(self):
         try:
             fila = var.ui.tableArt.selectedItems()
-            datos = [var.ui.lblNumArt,var.ui.txtNombreArt, var.ui.txtPrecioArt]
+            datos = [var.ui.lblNumArt, var.ui.txtNombreArt, var.ui.txtPrecioArt]
             if fila:
                 row = [dato.text() for dato in fila]
             for i, dato in enumerate(datos):
@@ -52,6 +53,7 @@ class Articulo():
 
         except Exception as error:
             print('Error en cargar datos de articulo', error)
+
     def buscaArt(self):
         try:
             conexion.Conexion.buscarTablaArt(str(var.ui.txtNombreArt.text()))
