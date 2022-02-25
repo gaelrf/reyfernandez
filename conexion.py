@@ -14,7 +14,17 @@ import xlrd as xlrd
 
 
 class Conexion():
-    def createDB(self):
+    def createDB(filedb):
+        """
+
+        Recibe el nombre de la base de datos.
+        Modulo que se ejecuta al principio del programa.
+        Crea las tablas y carga municipios y provincias.
+        Crea los directorios necesarios.
+
+        :rtype: None
+
+        """
         try:
             con = sqlite3.connect(database=filename)
             cur = con.cursor()
@@ -35,6 +45,14 @@ class Conexion():
             msg.exec()
 
     def db_connect(filedb):
+        """
+
+        Realiza la conexión con la base de datos al ejecutar el programa.
+
+        :return: boolean True si se ejecuta correctamente, False si hay un error.
+        :rtype: boolean
+
+        """
         try:
             db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
             db.setDatabaseName(filedb)
@@ -50,6 +68,11 @@ class Conexion():
             print('Problemas en conexion', error)
 
     def altaCli(newcli):
+        """
+
+        Modulo que recibe datos de cliente y los carga en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -81,6 +104,11 @@ class Conexion():
             print('Error en Alta cliente', error)
 
     def bajaCli(dni):
+        """
+
+        Modulo que recibe DNI de cliente y lo elimina de la base de datos.
+
+        """
         try:
             print(dni)
             query = QtSql.QSqlQuery()
@@ -102,7 +130,11 @@ class Conexion():
             print('Error en Baja cliente', error)
 
     def cargarTablaCli(self):
+        """
 
+        Modulo que toma datos de los clientes y los carga rn la tabla de la interfaz grafica.
+
+        """
         try:
             index = 0
             query = QtSql.QSqlQuery()
@@ -127,7 +159,13 @@ class Conexion():
             print('Error en mostrar tabla clientes', error)
 
     def cargaCli(dni):
+        """
 
+        Modulo que selecciona un cliente segun su dni y se lo devuelve a la funcion cargaCli de clientes.py
+
+        :return:
+        :rtype: object
+        """
         try:
             record = []
             query = QtSql.QSqlQuery()
@@ -143,6 +181,13 @@ class Conexion():
             print('Error en cargar datos de cliente', error)
 
     def cargarProv(self):
+        """
+
+        Modulo que carga las provincias en cmbProvincias en la interfaz gráfica
+
+        :return:
+        :rtype:
+        """
         try:
             record = {}
             query = QtSql.QSqlQuery()
@@ -155,6 +200,13 @@ class Conexion():
             print('Error en cargar provincias', error)
 
     def cargarMun(provincia):
+        """
+
+        Modulo que carga los municipios en cmbMunicipios segun una provincia dada.
+
+        :return:
+        :rtype:
+        """
         try:
             record = []
             query = QtSql.QSqlQuery()
@@ -168,6 +220,11 @@ class Conexion():
             print('Error en cargar provincias', error)
 
     def modifCli(modifcli):
+        """
+
+        Modulo que recibe los datos del cliente a modificar y los modifica en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('update clientes set alta = :alta, apellido = :apellido, nombre = :nombre, '
@@ -294,6 +351,11 @@ class Conexion():
             print('Error en conexion para exportar excel ', error)
 
     def altaArt(newart):
+        """
+
+        Modulo que recibe los datos del producto y los carga en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             print(newart)
@@ -318,6 +380,11 @@ class Conexion():
             print('Error en Alta cliente', error)
 
     def bajaArt(nombre):
+        """
+
+        Modulo que recibe el codigo del producto y lo elimina de la base de datos.
+
+        """
         try:
             print(nombre)
             query = QtSql.QSqlQuery()
@@ -339,7 +406,11 @@ class Conexion():
             print('Error en Baja Articulo', error)
 
     def cargarTablaArt(self):
+        """
 
+        Modulo que recarga la tabla de productos siempre que se modifica la tabla pproductos en la base de datos.
+
+        """
         try:
             index = 0
             query = QtSql.QSqlQuery()
@@ -361,7 +432,11 @@ class Conexion():
             print('Error en mostrar tabla articulos', error)
 
     def buscarTablaArt(nombre):
+        """
 
+        Modulo que dado un nombre de producto lo busca en la base de datos y lo carga en la tabla productos.
+
+        """
         try:
             index = 0
             query = QtSql.QSqlQuery()
@@ -422,6 +497,11 @@ class Conexion():
             print('Error en buscar cliente facturacion', error)
 
     def altaFact(registro):
+        """
+
+        Dado El
+
+        """
         try:
             print(registro)
             query = QtSql.QSqlQuery()
@@ -445,6 +525,11 @@ class Conexion():
             print('Error en alta factura', error)
 
     def cargarTableFact(self):
+        """
+
+        Modulo que recarga la tabla de productos siempre que se modifica la tabla facturas en la base de datos.
+
+        """
         try:
             index = 0
             query = QtSql.QSqlQuery()
