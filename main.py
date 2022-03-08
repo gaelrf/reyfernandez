@@ -64,6 +64,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFacturar.clicked.connect(facturacion.Facturacion.altaFact)
         var.ui.btnPDFCli.clicked.connect(informes.Informes.listadoClientes)
         var.ui.btnListArt.clicked.connect(informes.Informes.listadoProductos)
+        var.ui.btnLimpiaFormFact.clicked.connect(facturacion.Facturacion.limpiarFacturas)
+        var.ui.btnBorrarVenta.clicked.connect(conexion.Conexion.borrarVenta)
 
         var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.abrir)

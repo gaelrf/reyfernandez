@@ -41,7 +41,7 @@ class Conexion():
             msg = QtWidgets.QMessageBox()
             msg.setWindowTitle('Aviso')
             msg.setIcon(QtWidgets.QMessageBox.Warning)
-            msg.setText(error)
+            msg.setText(str(error))
             msg.exec()
 
     def db_connect(filedb):
@@ -707,18 +707,19 @@ class Conexion():
 
     def borrarVenta(self):
         try:
-            row = var.ui.tabVentas.selectedItems()
+            row = var.ui.tableVentas.selectedItems()
             codVenta = row[0].text()
             query = QtSql.QSqlQuery()
             query.prepare('delete from ventas where codventa = :codventa')
             query.bindValue(':codventa', int(codVenta))
             if query.exec_():
-                facturacion.Facturacion.cargaFac(self)
+                facturacion.Facturacion.cargaFact(self)
                 msg = QtWidgets.QMessageBox()
                 msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Information)
                 msg.setText('Venta eliminada')
                 msg.exec()
+                Conexion.cargarTableFact()
 
         except Exception as error:
             print('Error al borrar una venta ', error)

@@ -108,18 +108,21 @@ class Facturacion():
             venta.append(int(var.codpro))
             venta.append((float(var.precio)))
             venta.append(float(cantidad))
+            print('a')
             conexion.Conexion.cargarVenta(venta)
+            conexion.Conexion.cargarLineasVenta(str(var.ui.lblCodFact.text()))
+
 
         except Exception as error:
             print('Error al procesar el total de una venta ', error)
 
     def limpiarFacturas(self):
         try:
-            var.ui.txtDNIFac.setText("")
-            var.ui.lblNumFactura.setText("")
-            var.ui.txtFechaFac.setText("")
-            var.ui.lblNomFac.setText("")
-            conexion.Conexion.cargaTabFacturas(self)
+            var.ui.txtFactDNI.setText("")
+            var.ui.lblCodFact.setText("")
+            var.ui.txtFechaFact.setText("")
+            var.ui.lblNoneFact.setText("")
+            conexion.Conexion.cargarTableFact(self)
 
         except Exception as error:
             print('Error al limpiar campos de factura ', error)
