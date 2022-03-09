@@ -192,15 +192,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>img/reload.png</normaloff>img/reload.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnBuscaCli">
-            <property name="text">
-             <string/>
+             <iconset resource="img/reload.qrc">
+              <normaloff>:/reload/reload.png</normaloff>:/reload/reload.png</iconset>
             </property>
            </widget>
           </item>
@@ -258,7 +251,7 @@
             </property>
             <property name="icon">
              <iconset resource="img/calendar.qrc">
-              <normaloff>:/newPrefix/calendario.png</normaloff>:/newPrefix/calendario.png</iconset>
+              <normaloff>:/calendar/calendario.png</normaloff>:/calendar/calendario.png</iconset>
             </property>
            </widget>
           </item>
@@ -570,6 +563,22 @@
            </widget>
           </item>
           <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QCheckBox" name="chkEfectivo">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -674,6 +683,10 @@
           <property name="text">
            <string/>
           </property>
+          <property name="icon">
+           <iconset resource="img/documento.qrc">
+            <normaloff>:/documento/documento.png</normaloff>:/documento/documento.png</iconset>
+          </property>
          </widget>
         </item>
         <item>
@@ -688,8 +701,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>img/print.png</normaloff>img/print.png</iconset>
+           <iconset resource="img/print.qrc">
+            <normaloff>:/print/print.png</normaloff>:/print/print.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -836,8 +849,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>img/calendario.png</normaloff>img/calendario.png</iconset>
+           <iconset resource="img/calendar.qrc">
+            <normaloff>:/calendar/calendario.png</normaloff>:/calendar/calendario.png</iconset>
           </property>
          </widget>
         </item>
@@ -849,7 +862,7 @@
          <x>20</x>
          <y>10</y>
          <width>301</width>
-         <height>25</height>
+         <height>26</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -874,6 +887,10 @@
          <widget class="QPushButton" name="btnBuscaCliFact">
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="img/lupa.qrc">
+            <normaloff>:/lupa/lupa.png</normaloff>:/lupa/lupa.png</iconset>
           </property>
          </widget>
         </item>
@@ -919,7 +936,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>500</x>
@@ -941,7 +958,7 @@
              </font>
             </property>
             <property name="text">
-             <string/>
+             <string>Facturar</string>
             </property>
            </widget>
           </item>
@@ -949,6 +966,10 @@
            <widget class="QPushButton" name="btnLimpiaFormFact">
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="img/reload.qrc">
+              <normaloff>:/reload/reload.png</normaloff>:/reload/reload.png</iconset>
             </property>
            </widget>
           </item>
@@ -971,6 +992,10 @@
          <widget class="QPushButton" name="btnBorrarVenta">
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="img/bin.qrc">
+            <normaloff>:/bin/bin.png</normaloff>:/bin/bin.png</iconset>
           </property>
          </widget>
         </item>
@@ -1195,8 +1220,8 @@
        <rect>
         <x>170</x>
         <y>30</y>
-        <width>484</width>
-        <height>107</height>
+        <width>571</width>
+        <height>110</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1272,6 +1297,17 @@
          <item>
           <widget class="QLineEdit" name="txtNombreArt"/>
          </item>
+         <item>
+          <widget class="QPushButton" name="btnBuscaArt">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="img/lupa.qrc">
+             <normaloff>:/lupa/lupa.png</normaloff>:/lupa/lupa.png</iconset>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -1299,44 +1335,48 @@
          <item>
           <widget class="QLineEdit" name="txtPrecioArt"/>
          </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_9">
          <item>
-          <widget class="QPushButton" name="btnGrabaArt">
-           <property name="text">
-            <string>Guardar</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnModifArt">
-           <property name="text">
-            <string>Modificar</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnBajaArt">
-           <property name="text">
-            <string>Eliminar</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnBuscaArt">
-           <property name="text">
-            <string>Buscar</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnListArt">
-           <property name="text">
-            <string>Listar</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QPushButton" name="btnGrabaArt">
+             <property name="text">
+              <string>Guardar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnModifArt">
+             <property name="text">
+              <string>Modificar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnBajaArt">
+             <property name="text">
+              <string>Eliminar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnListArt">
+             <property name="text">
+              <string>Listar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="img/reload.qrc">
+               <normaloff>:/reload/reload.png</normaloff>:/reload/reload.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -1460,8 +1500,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>img/salir.png</normaloff>img/salir.png</iconset>
+    <iconset resource="img/salir.qrc">
+     <normaloff>:/salir/salir.png</normaloff>:/salir/salir.png</iconset>
    </property>
    <property name="text">
     <string>BarSalir</string>
@@ -1472,8 +1512,8 @@
   </action>
   <action name="actionBarAbrir">
    <property name="icon">
-    <iconset>
-     <normaloff>img/folder.png</normaloff>img/folder.png</iconset>
+    <iconset resource="img/folder.qrc">
+     <normaloff>:/folder/folder.png</normaloff>:/folder/folder.png</iconset>
    </property>
    <property name="text">
     <string>BarAbrir</string>
@@ -1484,8 +1524,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>img/backup.png</normaloff>img/backup.png</iconset>
+    <iconset resource="img/backup.qrc">
+     <normaloff>:/backup/backup.png</normaloff>:/backup/backup.png</iconset>
    </property>
    <property name="text">
     <string>BarCreateBackup</string>
@@ -1493,8 +1533,8 @@
   </action>
   <action name="actionBarRestaurarBackup">
    <property name="icon">
-    <iconset>
-     <normaloff>img/backup_restore.png</normaloff>img/backup_restore.png</iconset>
+    <iconset resource="img/backup_restore.qrc">
+     <normaloff>:/backup_restore/backup_restore.png</normaloff>:/backup_restore/backup_restore.png</iconset>
    </property>
    <property name="text">
     <string>BarRestauraBackup</string>
@@ -1502,9 +1542,8 @@
   </action>
   <action name="actionBarImprimir">
    <property name="icon">
-    <iconset>
-     <normaloff>img/print.png</normaloff>
-     <normalon>../../.designer/backup/img/print.png</normalon>img/print.png</iconset>
+    <iconset resource="img/print.qrc">
+     <normaloff>:/print/print.png</normaloff>:/print/print.png</iconset>
    </property>
    <property name="text">
     <string>BarImprimir</string>
@@ -1533,6 +1572,15 @@
  </widget>
  <resources>
   <include location="img/calendar.qrc"/>
+  <include location="img/documento.qrc"/>
+  <include location="img/bin.qrc"/>
+  <include location="img/lupa.qrc"/>
+  <include location="img/salir.qrc"/>
+  <include location="img/backup_restore.qrc"/>
+  <include location="img/backup.qrc"/>
+  <include location="img/folder.qrc"/>
+  <include location="img/print.qrc"/>
+  <include location="img/reload.qrc"/>
  </resources>
  <connections/>
  <buttongroups>

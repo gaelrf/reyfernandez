@@ -1,5 +1,5 @@
 <RCC>
-  <qresource prefix="newPrefix">
+  <qresource prefix="calendar">
     <file>calendario.png</file>
   </qresource>
 </RCC>

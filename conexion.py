@@ -540,7 +540,8 @@ class Conexion():
                     codigo = str(query.value(0))
                     fecha = query.value(1)
                     var.btnfacdel = QtWidgets.QPushButton()
-                    icopapelera = QtGui.QPixmap("img/papelera.png")
+                    icopapelera = QtGui.QIcon()
+                    icopapelera.addPixmap(QtGui.QPixmap(":/bin/bin.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                     var.btnfacdel.setFixedSize(24, 24)
                     var.btnfacdel.setIcon(QtGui.QIcon(icopapelera))
                     var.ui.tableFact.setRowCount(index + 1)  # creamos la fila y luego cargamos datos
@@ -639,8 +640,6 @@ class Conexion():
             query.bindValue(':precio', venta[2])
             query.bindValue(':cantidad', venta[3])
             if query.exec_():
-                var.ui.lblVenta.setText("Venta realizada")
-                var.ui.lblVenta.setStyleSheet('QLabel {color: green;}')
                 Conexion.cargarLineasVenta(venta[0])
             else:
                 var.ui.lblVenta.setText("Error en venta")
@@ -719,7 +718,7 @@ class Conexion():
                 msg.setIcon(QtWidgets.QMessageBox.Information)
                 msg.setText('Venta eliminada')
                 msg.exec()
-                Conexion.cargarTableFact()
+                Conexion.cargarTableFact(self)
 
         except Exception as error:
             print('Error al borrar una venta ', error)
